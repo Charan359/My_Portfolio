@@ -4430,6 +4430,9 @@ body.is-loaded .hero__shapes .hero__shape {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    width: fit-content;
+    max-width: fit-content;
+    align-self: flex-start;
     background: rgba(201, 169, 110, 0.16);
     border: 1px solid rgba(180, 140, 70, 0.45);
     padding: 6px 14px;
@@ -4437,7 +4440,6 @@ body.is-loaded .hero__shapes .hero__shape {
     margin-bottom: 12px;
     backdrop-filter: blur(8px);
     flex-wrap: wrap;
-    max-width: fit-content;
     animation: fadeIn 0.8s 0.2s ease forwards;
 }
 
@@ -4821,9 +4823,12 @@ body.is-loaded .hero__shapes .hero__shape {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    width: fit-content;
+    max-width: fit-content;
+    align-self: flex-start;
     background: rgba(20, 20, 25, 0.05);
     border: 1px solid rgba(20, 20, 25, 0.12);
-    padding: 6px 14px;
+    padding: 5px 14px;
     border-radius: 20px;
     margin: 6px 0 14px;
     backdrop-filter: blur(8px);
