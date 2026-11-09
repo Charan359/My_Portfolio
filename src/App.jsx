@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import MarkovLatticeCanvas from './components/MarkovLatticeCanvas'
 
 export default function App() {
   const [preloaderProgress, setPreloaderProgress] = useState(0)
@@ -16,6 +17,7 @@ export default function App() {
   const [sandboxDevice, setSandboxDevice] = useState('desktop')
   const [sandboxKey, setSandboxKey] = useState(0)
   const [isSandboxLoading, setIsSandboxLoading] = useState(true)
+  const [showPrivAgentViz, setShowPrivAgentViz] = useState(false)
 
   const handleOpenSandbox = (project) => {
     setSandboxProject(project)
@@ -210,8 +212,13 @@ export default function App() {
     document.addEventListener('mouseenter', handleMouseEnter)
     animId = requestAnimationFrame(updateCursor)
 
-    // Hover detection for interactive elements
+    // Hover detection for interactive elements & text readability
     const handleMouseOver = (e) => {
+      const isText = e.target.closest('p, li, .about__text, .about__lead, .work__card-desc, .work__card-bullets, .timeline__item-desc, .skills__card-desc, .contact__subtitle')
+      if (isText && cursorRef.current) {
+        cursorRef.current.classList.add('is-text')
+      }
+
       const target = e.target.closest('a, button, [data-magnetic], .hero__ticker-item, .hero__portrait-wrapper, .work__card, .work__bezel, .skills__card, .skills__filter-btn, .timeline__item-card, .search-modal__item, .sandbox-modal__action-btn, .sandbox-modal__device-btn, .sandbox-modal__traffic-dot')
       if (target && cursorRef.current) {
         cursorRef.current.classList.add('is-hover')
@@ -219,6 +226,11 @@ export default function App() {
     }
 
     const handleMouseOut = (e) => {
+      const isText = e.target.closest('p, li, .about__text, .about__lead, .work__card-desc, .work__card-bullets, .timeline__item-desc, .skills__card-desc, .contact__subtitle')
+      if (isText && cursorRef.current) {
+        cursorRef.current.classList.remove('is-text')
+      }
+
       const target = e.target.closest('a, button, [data-magnetic], .hero__ticker-item, .hero__portrait-wrapper, .work__card, .work__bezel, .skills__card, .skills__filter-btn, .timeline__item-card, .search-modal__item, .sandbox-modal__action-btn, .sandbox-modal__device-btn, .sandbox-modal__traffic-dot')
       if (target && cursorRef.current) {
         cursorRef.current.classList.remove('is-hover')
@@ -375,6 +387,7 @@ export default function App() {
       tech: ['Python', 'IFC / ABAC', 'Markov Reachability', 'LLM Security', 'FastAPI'],
       liveUrl: 'https://priv-agent-shield-bice.vercel.app/',
       repoUrl: 'https://github.com/Charan359',
+      screenshot: '/privagentshield-screen.png',
       featured: true,
       hasLiveSandbox: true,
       browserUrl: 'priv-agent-shield-bice.vercel.app',
@@ -397,6 +410,7 @@ export default function App() {
       tech: ['React 19', 'TypeScript', 'Tailwind CSS', 'Supabase', 'Groq (Llama 3.1)', 'Leaflet'],
       liveUrl: 'https://urbanpulse-ai.netlify.app/',
       repoUrl: 'https://github.com/Charan359/UrbanPulse_AI',
+      screenshot: '/urbanpulse-screen.png',
       featured: false,
       hasLiveSandbox: true,
       browserUrl: 'urbanpulse-ai.netlify.app',
@@ -419,6 +433,7 @@ export default function App() {
       tech: ['FastAPI', 'Python', 'React', 'Semgrep AST', 'WebSockets', 'SHA-256', 'REST APIs'],
       liveUrl: 'https://securix-world-monitor.vercel.app/',
       repoUrl: 'https://github.com/Charan359/WorldMonitor',
+      screenshot: '/worldmonitor-screen.png',
       featured: false,
       hasLiveSandbox: true,
       browserUrl: 'securix-world-monitor.vercel.app',
@@ -441,6 +456,7 @@ export default function App() {
       tech: ['JavaScript', 'HTML5', 'CSS3', 'Forensic Data Structures', 'SHA-256 Hashing', 'ISO/IEC 27037'],
       liveUrl: 'https://dvr-nvr-forensic-analyzer.vercel.app/',
       repoUrl: 'https://github.com/Charan359/DVR-NVR-Forensic-Analyzer',
+      screenshot: '/dvrnvr-screen.png',
       featured: false,
       hasLiveSandbox: true,
       browserUrl: 'dvr-nvr-forensic-analyzer.vercel.app',
@@ -463,6 +479,7 @@ export default function App() {
       tech: ['Power BI', 'Microsoft Excel', 'Data Analytics', 'DAX Formulas', 'Data Modeling & Visualization'],
       liveUrl: 'https://github.com/Charan359/Grocery-Delivery-Analytics',
       repoUrl: 'https://github.com/Charan359/Grocery-Delivery-Analytics',
+      screenshot: '/groceryanalytics-screen.png',
       featured: false,
       hasLiveSandbox: false,
       browserUrl: 'github.com/Charan359/Grocery-Delivery-Analytics',
@@ -553,74 +570,74 @@ export default function App() {
     }
   ]
 
-  // Task 2: Categorized Skill Matrix
+  // Task 2: Categorized Skill Matrix with Contextual Verification & Project Proof
   const skillCategories = [
     {
       id: 'languages',
       title: 'Programming & Core Foundations',
       subtitle: 'Algorithmic problem-solving and systems design',
-      icon: '{ }',
+      iconType: 'code',
       badge: 'Core Languages',
       skills: [
-        { name: 'Python', level: 'Advanced', tag: 'Data Science & APIs' },
-        { name: 'Java', level: 'Proficient', tag: 'OOP & Architecture' },
-        { name: 'C', level: 'Proficient', tag: 'Systems & Memory' },
-        { name: 'C++', level: 'Proficient', tag: 'DSA & Algorithms' },
-        { name: 'JavaScript (ES6+)', level: 'Advanced', tag: 'Async & Full-Stack' },
-        { name: 'SQL', level: 'Advanced', tag: 'Complex Queries & Modeling' },
-        { name: 'Data Structures & Algorithms', level: 'Core', tag: 'Optimized Complexity' },
-        { name: 'Object-Oriented Design', level: 'Core', tag: 'Design Patterns' },
+        { name: 'Python', proof: 'PrivAgentShield & LRI*', tag: 'Research Math & FastAPI' },
+        { name: 'Java', proof: 'Oracle Certified', tag: 'OOP & Modular Architecture' },
+        { name: 'C', proof: 'Systems Programming', tag: 'Memory & Bitwise Operations' },
+        { name: 'C++', proof: 'NCET Data Science', tag: 'DSA & Algorithmic Optimization' },
+        { name: 'JavaScript (ES6+)', proof: 'UrbanPulse AI', tag: 'Async Engine & Reactive State' },
+        { name: 'SQL', proof: 'Oracle 23ai Certified', tag: 'Relational Modeling & Query Tuning' },
+        { name: 'Data Structures & Algorithms', proof: '8.41 CGPA Core', tag: 'O(n log n) Complexity Tuning' },
+        { name: 'Object-Oriented Design', proof: 'Production Architect', tag: 'Design Patterns & Clean Code' },
       ]
     },
     {
       id: 'ai',
       title: 'AI, Machine Learning & Analytics',
       subtitle: 'Predictive modeling, statistical insights and LLM engineering',
-      icon: '🧠',
+      iconType: 'ai',
       badge: 'AI & Data Intelligence',
       skills: [
-        { name: 'Machine Learning', level: 'Advanced', tag: 'Supervised & Unsupervised' },
-        { name: 'Scikit-learn', level: 'Advanced', tag: 'Pipelines & Evaluation' },
-        { name: 'Pandas', level: 'Advanced', tag: 'Data Wrangling' },
-        { name: 'NumPy', level: 'Advanced', tag: 'Vectorized Computing' },
-        { name: 'Power BI', level: 'Advanced', tag: 'Enterprise Dashboards' },
-        { name: 'DAX & Data Modeling', level: 'Proficient', tag: 'Star Schema & KPIs' },
-        { name: 'Matplotlib & Seaborn', level: 'Proficient', tag: 'Visual Analytics' },
-        { name: 'Advanced Excel', level: 'Proficient', tag: 'Financial & Sales EDA' },
-        { name: 'Groq & LLM APIs', level: 'Applied', tag: 'Llama 3.1 & Inference' },
+        { name: 'Machine Learning', proof: 'Springer Nature Paper', tag: 'Minimax & Predictive Modeling' },
+        { name: 'Scikit-learn', proof: 'Empirical Benchmark', tag: '31 Traces Baseline Evaluation' },
+        { name: 'Pandas', proof: 'Data Science Core', tag: 'High-Volume Trace Wrangling' },
+        { name: 'NumPy', proof: 'LRI* Math Formulation', tag: 'Vectorized Matrix Computing' },
+        { name: 'Power BI', proof: 'Enterprise Analytics', tag: '₹ 12.01L Sales Data Modeling' },
+        { name: 'DAX & Data Modeling', proof: 'BI Case Study', tag: 'Star Schema & 1,559 SKUs KPIs' },
+        { name: 'Matplotlib & Seaborn', proof: 'Research Spotlight', tag: 'Statistical EDA & Visual Analytics' },
+        { name: 'Advanced Excel', proof: 'NoviTech MasterClass', tag: 'Financial Slicers & Regression' },
+        { name: 'Groq & LLM APIs', proof: 'UrbanPulse Voice AI', tag: 'Llama 3.1 & 15-Lang Inference' },
       ]
     },
     {
       id: 'web',
       title: 'Full-Stack & Web Engineering',
       subtitle: 'Modern reactive interfaces and robust backend microservices',
-      icon: '⚡',
+      iconType: 'web',
       badge: 'Web & API Stacks',
       skills: [
-        { name: 'React 19', level: 'Advanced', tag: 'Component Systems & Hooks' },
-        { name: 'FastAPI', level: 'Advanced', tag: 'Async REST & OpenAPI' },
-        { name: 'Flask', level: 'Proficient', tag: 'Microservices & Services' },
-        { name: 'Tailwind CSS', level: 'Advanced', tag: 'Design Systems & Utility' },
-        { name: 'HTML5 & CSS3', level: 'Advanced', tag: 'Semantic & Responsive' },
-        { name: 'RESTful API Architecture', level: 'Advanced', tag: 'JSON & Endpoint Design' },
-        { name: 'WebSockets', level: 'Proficient', tag: 'Bidirectional Streaming' },
+        { name: 'React 19', proof: 'Production Deployed', tag: 'UrbanPulse AI & Modern SPAs' },
+        { name: 'FastAPI', proof: 'WorldMonitor Suite', tag: 'Async REST & OpenAPI Schema' },
+        { name: 'Flask', proof: 'Microservice Core', tag: 'Lightweight Backend Microservices' },
+        { name: 'Tailwind CSS', proof: 'Luxe UI Systems', tag: 'Responsive Design & Dynamic Themes' },
+        { name: 'HTML5 & CSS3', proof: 'Pixel Precision', tag: 'CSS 3D Transforms & Web Standards' },
+        { name: 'RESTful API Architecture', proof: 'Enterprise Standard', tag: 'JSON Endpoint Specification' },
+        { name: 'WebSockets', proof: 'WorldMonitor Realtime', tag: 'Bidirectional Scan Streaming' },
       ]
     },
     {
       id: 'tools',
       title: 'Databases, Cloud & Security',
       subtitle: 'Resilient data persistence, cloud infrastructure and verification',
-      icon: '🛡️',
+      iconType: 'security',
       badge: 'Infra & Forensic Tools',
       skills: [
-        { name: 'MySQL', level: 'Advanced', tag: 'Relational & Indexing' },
-        { name: 'MongoDB', level: 'Proficient', tag: 'Document DB' },
-        { name: 'Supabase', level: 'Advanced', tag: 'PostgreSQL & Realtime' },
-        { name: 'Oracle Cloud (OCI)', level: 'Certified', tag: 'AI Foundations 2025' },
-        { name: 'Git & GitHub', level: 'Advanced', tag: 'Version Control & CI/CD' },
-        { name: 'Linux & Bash', level: 'Proficient', tag: 'CLI & Environment' },
-        { name: 'Jupyter Notebook', level: 'Advanced', tag: 'EDA & Prototyping' },
-        { name: 'SHA-256 Forensics', level: 'Applied', tag: 'Cryptographic Hashing' },
+        { name: 'MySQL', proof: 'ACID Relational', tag: 'Relational Schemas & Indexing' },
+        { name: 'MongoDB', proof: 'Document Store', tag: 'Aggregation & JSON Pipelines' },
+        { name: 'Supabase', proof: 'Live UrbanPulse DB', tag: 'PostgreSQL Realtime & Auth' },
+        { name: 'Oracle Cloud (OCI)', proof: 'Certified 2025', tag: 'OCI AI Foundations & Infrastructure' },
+        { name: 'Git & GitHub', proof: 'Daily Open Source', tag: 'Version Control & GitHub Actions' },
+        { name: 'Linux & Bash', proof: 'Terminal Native', tag: 'CLI Scripting & Disk Forensic Env' },
+        { name: 'Jupyter Notebook', proof: 'EDA & Prototyping', tag: 'Interactive Data Science Sandbox' },
+        { name: 'SHA-256 Forensics', proof: 'SIH 2026 Nominated', tag: 'ISO/IEC 27037 Evidence Integrity' },
       ]
     }
   ]
@@ -662,6 +679,38 @@ export default function App() {
 
   const handleScrollClick = () => {
     document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const renderCategoryIcon = (iconType) => {
+    switch (iconType) {
+      case 'code':
+        return (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="16 18 22 12 16 6"></polyline>
+            <polyline points="8 6 2 12 8 18"></polyline>
+          </svg>
+        )
+      case 'ai':
+        return (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        )
+      case 'web':
+        return (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+          </svg>
+        )
+      case 'security':
+      default:
+        return (
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+          </svg>
+        )
+    }
   }
 
   return (
@@ -917,6 +966,30 @@ export default function App() {
         {/* Hero Content */}
         <div className="hero__content">
           <div className="hero__left">
+            {/* Springer Nature Acceptance Spotlight Line */}
+            <div className="hero__paper-spotlight" data-reveal>
+              <span className="hero__paper-dot"></span>
+              <span className="hero__paper-text">First Author &bull; Springer Nature (ICMMDU 2026)</span>
+              <div className="hero__paper-links">
+                <a
+                  href="https://orcid.org/0009-0007-0553-6192"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hero__paper-link"
+                  title="Verified Author ORCID Record"
+                >
+                  ORCID ↗
+                </a>
+                <a
+                  href="#privagentshield"
+                  className="hero__paper-link hero__paper-link--gold"
+                  title="View PrivAgentShield Paper ID: 190"
+                >
+                  Paper #190 ‹
+                </a>
+              </div>
+            </div>
+
             <span className="hero__number" data-reveal>
               {String(activeProjectIdx + 1).padStart(2, '0')}
             </span>
@@ -941,13 +1014,13 @@ export default function App() {
               </span>
               <span className="hero__name-line">
                 <span className="hero__name-word">
-                  {'HS'.split('').map((char, i) => (
+                  {'H S'.split('').map((char, i) => (
                     <span
                       key={i}
                       className="hero__name-char"
-                      style={{ '--char-index': i + 6 }}
+                      style={{ '--char-index': i + 7 }}
                     >
-                      {char}
+                      {char === ' ' ? '\u00A0' : char}
                     </span>
                   ))}
                 </span>
@@ -955,98 +1028,104 @@ export default function App() {
             </h1>
             <p className="hero__tagline" id="hero-tagline" data-reveal>
               <span className="hero__tagline-dash"></span>
-              creative developer
+              AI Researcher &amp; Full-Stack Developer
             </p>
 
-            {/* Social Links */}
-            <div className="hero__socials" id="hero-socials">
-              <a
-                href="https://github.com/Charan359"
-                target="_blank"
-                rel="noreferrer"
-                className="hero__social"
-                data-magnetic
-                aria-label="GitHub Profile"
-                onMouseMove={handleMagneticMove}
-                onMouseLeave={handleMagneticLeave}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                </svg>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/charan-hs-4bbb9232b"
-                target="_blank"
-                rel="noreferrer"
-                className="hero__social"
-                data-magnetic
-                aria-label="LinkedIn Profile"
-                onMouseMove={handleMagneticMove}
-                onMouseLeave={handleMagneticLeave}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                </svg>
-              </a>
+            {/* Resume Download & Social Links */}
+            <div className="hero__actions-row" id="hero-socials">
               <a
                 href="/Charan_HS_Resume.pdf"
                 download="Charan_HS_Resume.pdf"
-                className="hero__social"
+                className="hero__cv-btn"
                 data-magnetic
-                aria-label="Download Resume"
-                title="Download Resume (PDF)"
                 onMouseMove={handleMagneticMove}
                 onMouseLeave={handleMagneticLeave}
+                title="Download Charan H S Official Single-Page Resume (PDF)"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                  <line x1="12" y1="18" x2="12" y2="12"></line>
-                  <polyline points="9 15 12 18 15 15"></polyline>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
                 </svg>
+                <span>Download CV</span>
               </a>
-              <a
-                href="mailto:charanhs359@gmail.com"
-                className="hero__social"
-                data-magnetic
-                aria-label="Direct Email"
-                title="Send Email"
-                onMouseMove={handleMagneticMove}
-                onMouseLeave={handleMagneticLeave}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <rect x="2" y="4" width="20" height="16" rx="2"/>
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-                </svg>
-              </a>
+
+              <div className="hero__socials">
+                <a
+                  href="https://github.com/Charan359"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hero__social"
+                  data-magnetic
+                  aria-label="GitHub Profile"
+                  title="GitHub: Charan359"
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/charan-hs-4bbb9232b"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hero__social"
+                  data-magnetic
+                  aria-label="LinkedIn Profile"
+                  title="LinkedIn: Charan H S"
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a
+                  href="mailto:charanhs359@gmail.com"
+                  className="hero__social"
+                  data-magnetic
+                  aria-label="Direct Email"
+                  title="Direct Email: charanhs359@gmail.com"
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="4" width="20" height="16" rx="2"/>
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                  </svg>
+                </a>
+              </div>
             </div>
 
-            {/* Navigation Arrows */}
+            {/* Navigation Arrows with clear context */}
             <div className="hero__arrows" id="hero-arrows">
               <button
                 className="hero__arrow hero__arrow--prev"
                 id="prev-btn"
-                aria-label="Previous"
+                aria-label="Previous Featured Project"
                 data-magnetic
                 onClick={handlePrev}
                 onMouseMove={handleMagneticMove}
                 onMouseLeave={handleMagneticLeave}
+                title="Previous Featured Project (Left Arrow)"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="15 18 9 12 15 6"></polyline>
                 </svg>
-                <span>previous</span>
+                <span>project</span>
               </button>
               <button
                 className="hero__arrow hero__arrow--next"
                 id="next-btn"
-                aria-label="Next"
+                aria-label="Next Featured Project"
                 data-magnetic
                 onClick={handleNext}
                 onMouseMove={handleMagneticMove}
                 onMouseLeave={handleMagneticLeave}
+                title="Next Featured Project (Right Arrow)"
               >
-                <span>next</span>
+                <span>project</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="9 18 15 12 9 6"></polyline>
                 </svg>
@@ -1055,10 +1134,10 @@ export default function App() {
           </div>
 
           <div className="hero__right">
-            {/* Welcome Greeting */}
+            {/* Real Research Hook instead of filler */}
             <div className="hero__greeting" id="hero-greeting">
               <span className="hero__greeting-line"></span>
-              <p>Welcome to my portfolio</p>
+              <p>65.0% privacy leakage prevention in multi-agent LLMs &bull; Springer Nature Accepted</p>
             </div>
 
             {/* Portrait Image with 3D tilt — half-page layout */}
@@ -1072,12 +1151,12 @@ export default function App() {
               {/* Description — slides in from left on hover */}
               <div className="hero__description" id="hero-description">
                 <div className="hero__desc-line"></div>
-                <p>Passionate about creating digital experiences that blend aesthetics with functionality. Building innovative solutions one project at a time.</p>
+                <p>Formulating rigorous runtime policy mediation for LLM architectures and building production-grade web systems. First Author in Springer Nature proceedings.</p>
               </div>
 
               <div className="hero__portrait" id="hero-portrait">
                 <div className="hero__portrait-overlay"></div>
-                <img src="/charan-photo.png?v=2" alt="Charan HS Portrait" id="portrait-img" />
+                <img src="/charan-photo.png?v=2" alt="Charan H S Portrait" id="portrait-img" />
               </div>
               <div className="hero__portrait-frame"></div>
             </div>
@@ -1090,13 +1169,11 @@ export default function App() {
           <span>scroll</span>
         </div>
 
-        {/* Bottom Ticker / Carousel */}
+        {/* Bottom Ticker / Carousel (Cleaned up duplicate 'more') */}
         <div className="hero__bottom" id="hero-bottom">
-          <div className="hero__more" id="more-link" onClick={handleNext}>
-            <span>more</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
+          <div className="hero__bottom-label">
+            <span>Featured Work</span>
+            <span className="hero__bottom-dot">&bull;</span>
           </div>
           <div className="hero__ticker" id="ticker" ref={tickerRef}>
             {tickerItems.map((item, index) => (
@@ -1160,10 +1237,35 @@ export default function App() {
 
               {/* Achievement Badges */}
               <div className="about__badges">
-                <span className="about__badge">🎓 B.E. CSE (Data Science)</span>
-                <span className="about__badge">🏆 SIH 2026 Dual Track Nominee</span>
-                <span className="about__badge">📄 Springer Nature 1st Author</span>
-                <span className="about__badge">🤝 Vibexathon 1.0 Coordinator</span>
+                <span className="about__badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                    <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                  </svg>
+                  <span>B.E. CSE (Data Science)</span>
+                </span>
+                <span className="about__badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                  <span>SIH 2026 Dual Track Nominee (Web Security &amp; CCTV Forensics)</span>
+                </span>
+                <span className="about__badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="16" y1="13" x2="8" y2="13"></line>
+                    <line x1="16" y1="17" x2="8" y2="17"></line>
+                  </svg>
+                  <span>Springer Nature 1st Author (ICMMDU 2026)</span>
+                </span>
+                <span className="about__badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="8" r="7"></circle>
+                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                  </svg>
+                  <span>Vibexathon 1.0 State Hackathon Coordinator</span>
+                </span>
               </div>
 
               {/* Actions */}
@@ -1207,7 +1309,7 @@ export default function App() {
                 <div className="about__stat-card-glow"></div>
                 <span className="about__stat-number">8.41</span>
                 <span className="about__stat-label">Academic CGPA</span>
-                <p className="about__stat-desc">4th Sem B.E. Data Science at NCET Bengaluru with distinction.</p>
+                <p className="about__stat-desc">4th Sem B.E. Data Science at NCET Bengaluru (2024–2028 batch).</p>
               </div>
 
               <div className="about__stat-card" data-magnetic onMouseMove={handleMagneticMove} onMouseLeave={handleMagneticLeave}>
@@ -1226,9 +1328,9 @@ export default function App() {
 
               <div className="about__stat-card" data-magnetic onMouseMove={handleMagneticMove} onMouseLeave={handleMagneticLeave}>
                 <div className="about__stat-card-glow"></div>
-                <span className="about__stat-number">15+</span>
+                <span className="about__stat-number">32+</span>
                 <span className="about__stat-label">Core Technologies</span>
-                <p className="about__stat-desc">Python, React, FastAPI, SQL, Machine Learning, Power BI &amp; Forensics.</p>
+                <p className="about__stat-desc">Across AI/ML, Full-Stack, Forensics &amp; Cloud databases.</p>
               </div>
             </div>
           </div>
@@ -1272,7 +1374,7 @@ export default function App() {
                   onMouseMove={handleMagneticMove}
                   onMouseLeave={handleMagneticLeave}
                 >
-                  <span className="skills__filter-icon">{cat.icon}</span>
+                  <span className="skills__filter-icon">{renderCategoryIcon(cat.iconType)}</span>
                   <span>{cat.badge}</span>
                 </button>
               ))}
@@ -1287,7 +1389,7 @@ export default function App() {
                 <div key={cat.id} className="skills__card" data-magnetic onMouseMove={handleMagneticMove} onMouseLeave={handleMagneticLeave}>
                   <div className="skills__card-top">
                     <div className="skills__card-icon-wrap">
-                      <span className="skills__card-icon">{cat.icon}</span>
+                      <span className="skills__card-icon">{renderCategoryIcon(cat.iconType)}</span>
                     </div>
                     <div className="skills__card-meta">
                       <span className="skills__card-badge">{cat.badge}</span>
@@ -1301,7 +1403,7 @@ export default function App() {
                       <div key={idx} className="skills__pill">
                         <div className="skills__pill-header">
                           <span className="skills__pill-name">{skill.name}</span>
-                          <span className="skills__pill-level">{skill.level}</span>
+                          <span className="skills__pill-proof">{skill.proof}</span>
                         </div>
                         <span className="skills__pill-tag">{skill.tag}</span>
                       </div>
@@ -1390,20 +1492,19 @@ export default function App() {
                       <button
                         type="button"
                         onClick={() => handleOpenSandbox(project)}
-                        className="work__btn work__btn--sandbox"
+                        className="work__btn work__btn--live"
                         data-magnetic
                         onMouseMove={handleMagneticMove}
                         onMouseLeave={handleMagneticLeave}
+                        title={`Launch interactive sandbox of ${project.title}`}
                       >
                         <span className="work__btn-pulse"></span>
-                        <span>⚡ Live Interactive Sandbox</span>
+                        <span>Live Demo</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polygon points="5 3 19 12 5 21 5 3"></polygon>
                         </svg>
                       </button>
-                    ) : null}
-
-                    {project.liveUrl && (
+                    ) : project.liveUrl ? (
                       <a
                         href={project.liveUrl}
                         target="_blank"
@@ -1412,14 +1513,31 @@ export default function App() {
                         data-magnetic
                         onMouseMove={handleMagneticMove}
                         onMouseLeave={handleMagneticLeave}
+                        title={`Open live project in new tab`}
                       >
-                        <span>{project.hasLiveSandbox ? 'New Tab' : 'Live Platform'}</span>
+                        <span>Live Demo</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <line x1="7" y1="17" x2="17" y2="7"></line>
                           <polyline points="7 7 17 7 17 17"></polyline>
                         </svg>
                       </a>
+                    ) : null}
+
+                    {project.id === 'privagentshield' && (
+                      <button
+                        type="button"
+                        onClick={() => setShowPrivAgentViz((prev) => !prev)}
+                        className={`work__btn work__btn--viz ${showPrivAgentViz ? 'is-active' : ''}`}
+                        data-magnetic
+                        onMouseMove={handleMagneticMove}
+                        onMouseLeave={handleMagneticLeave}
+                        title="Toggle interactive 3D Markov Reachability & Lattice graph"
+                      >
+                        <span className="work__btn-spark">⚡</span>
+                        <span>{showPrivAgentViz ? 'Hide 3D Research Graph' : '3D Markov Model'}</span>
+                      </button>
                     )}
+
                     {project.repoUrl && (
                       <a
                         href={project.repoUrl}
@@ -1429,6 +1547,7 @@ export default function App() {
                         data-magnetic
                         onMouseMove={handleMagneticMove}
                         onMouseLeave={handleMagneticLeave}
+                        title={`Inspect source repository on GitHub`}
                       >
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
@@ -1437,6 +1556,13 @@ export default function App() {
                       </a>
                     )}
                   </div>
+
+                  {/* Interactive 3D Markov Reachability & Lattice Visual (Exclusive to PrivAgentShield) */}
+                  {project.id === 'privagentshield' && showPrivAgentViz && (
+                    <div className="work__markov-wrapper">
+                      <MarkovLatticeCanvas />
+                    </div>
+                  )}
                 </div>
 
                 {/* macOS 3D Tilt Browser Bezel Preview */}
@@ -1498,39 +1624,14 @@ export default function App() {
                         <div className="work__bezel-badge">{project.metrics.badge}</div>
                       </div>
 
-                      {/* Mockup Dashboard Graphics */}
-                      <div className="work__bezel-graphics">
-                        <div className="work__mockup-grid">
-                          <div className="work__mockup-card work__mockup-card--main">
-                            <div className="work__mockup-header-line"></div>
-                            <div className="work__mockup-bars">
-                              <span style={{ width: '85%' }}></span>
-                              <span style={{ width: '62%' }}></span>
-                              <span style={{ width: '94%' }}></span>
-                              <span style={{ width: '73%' }}></span>
-                            </div>
-                            <div className="work__mockup-chart">
-                              <svg viewBox="0 0 300 80" className="work__mockup-sparkline">
-                                <path d="M 0,60 Q 40,20 80,45 T 160,25 T 240,50 T 300,15" fill="none" stroke="var(--accent)" strokeWidth="3" />
-                                <path d="M 0,60 Q 40,20 80,45 T 160,25 T 240,50 T 300,15 L 300,80 L 0,80 Z" fill="rgba(201,169,110,0.12)" />
-                              </svg>
-                            </div>
-                          </div>
-                          <div className="work__mockup-side">
-                            <div className="work__mockup-mini-card">
-                              <span className="work__mockup-mini-dot"></span>
-                              <div className="work__mockup-mini-text"></div>
-                            </div>
-                            <div className="work__mockup-mini-card">
-                              <span className="work__mockup-mini-dot" style={{ background: '#4caf50' }}></span>
-                              <div className="work__mockup-mini-text"></div>
-                            </div>
-                            <div className="work__mockup-mini-card">
-                              <span className="work__mockup-mini-dot" style={{ background: '#2196f3' }}></span>
-                              <div className="work__mockup-mini-text"></div>
-                            </div>
-                          </div>
-                        </div>
+                      {/* Real Deployed Application Screenshot */}
+                      <div className="work__bezel-screen-media">
+                        <img
+                          src={project.screenshot}
+                          alt={`${project.title} live interface preview`}
+                          className="work__bezel-img"
+                          loading="lazy"
+                        />
                       </div>
 
                       {/* Interactive Hover Trigger Overlay */}
@@ -1542,7 +1643,7 @@ export default function App() {
                             className="work__bezel-launch-btn"
                           >
                             <span className="work__bezel-launch-icon">⚡</span>
-                            <span>Launch Live Sandbox</span>
+                            <span>Launch Live Demo</span>
                           </button>
                         ) : (
                           <a
@@ -1551,15 +1652,11 @@ export default function App() {
                             rel="noreferrer"
                             className="work__bezel-launch-btn"
                           >
-                            <span>Explore Repository</span>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                              <line x1="7" y1="17" x2="17" y2="7"></line>
-                              <polyline points="7 7 17 7 17 17"></polyline>
-                            </svg>
+                            <span>Open Project ↗</span>
                           </a>
                         )}
                         <p className="work__bezel-overlay-note">
-                          {project.hasLiveSandbox ? 'Interactive in-portfolio sandbox with device viewports' : 'Direct repository & analytical case study'}
+                          {project.hasLiveSandbox ? 'Interactive in-portfolio sandbox' : 'Direct case study & source'}
                         </p>
                       </div>
                     </div>
