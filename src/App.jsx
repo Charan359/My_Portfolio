@@ -49,7 +49,7 @@ export default function App() {
     { type: 'Project', title: 'UrbanPulse AI', desc: 'Smart city platform with 15-language Voice AI & Leaflet overlays', target: 'urbanpulse' },
     { type: 'Project', title: 'WorldMonitor', desc: 'Automated cybersecurity vulnerability scanner (SIH 2026 Nominated)', target: 'worldmonitor' },
     { type: 'Project', title: 'DVR/NVR Forensic Analyzer', desc: 'Physical drive imaging & CCTV video carving (SIH 2026)', target: 'dvrnvr' },
-    { type: 'Project', title: 'Grocery Delivery Analytics', desc: 'Interactive Power BI performance & logistics dashboard', target: 'groceryanalytics' },
+    { type: 'Project', title: 'Blinkit Grocery Analytics', desc: 'Interactive Power BI performance & logistics dashboard ($1.20M analyzed)', target: 'groceryanalytics' },
     { type: 'Skill', title: 'Python & Machine Learning', desc: 'Data Science, Scikit-learn, Pandas, NumPy, Predictive Models', target: 'skills' },
     { type: 'Skill', title: 'React 19 & Full-Stack', desc: 'FastAPI, Flask, Tailwind CSS, Supabase, WebSockets', target: 'skills' },
     { type: 'Skill', title: 'Power BI & SQL', desc: 'DAX modeling, MySQL, MongoDB, Enterprise Dashboards', target: 'skills' },
@@ -466,15 +466,15 @@ export default function App() {
       id: 'groceryanalytics',
       number: '05',
       category: 'Business Intelligence & Operations',
-      title: 'Grocery Delivery Analytics',
-      tagline: 'Interactive Retail Performance & Logistics Intelligence',
+      title: 'Blinkit Grocery Analytics',
+      tagline: 'Interactive Retail Performance & Quick Commerce Logistics Intelligence',
       role: 'Data Analyst & BI Developer',
       venue: 'Enterprise Data Modeling Case Study',
-      description: 'Developed an interactive retail analytics dashboard analyzing Rs. 12.01 Lakhs in cumulative sales across 1,559 items to optimize inventory distribution, outlet performance, and logistics efficiency.',
+      description: 'Developed an end-to-end interactive Power BI dashboard analyzing $1.20M (Rs. 12.01 Lakhs) in cumulative sales across 1,559 items to optimize inventory distribution, outlet tiers (Tier 1-3), and fulfillment logistics.',
       bullets: [
-        'Designed comprehensive DAX data models and KPI tracking outlet sizes, location tiers (Tier 1-3), and sales.',
-        'Evaluated item category profitability, return rates, and outlet fulfillment performance.',
-        'Built clear executive summaries and interactive filter slices for operational decision makers.'
+        'Designed comprehensive DAX data models tracking outlet sizes (Medium, Small, High), location tiers (Tier 1-3), and revenue.',
+        'Evaluated item category profitability across fruits & vegetables, snacks, household essentials, and dairy.',
+        'Built executive KPI summaries with average sales ($140.99) and satisfaction ratings (3.92 / 5.0).'
       ],
       tech: ['Power BI', 'Microsoft Excel', 'Data Analytics', 'DAX Formulas', 'Data Modeling & Visualization'],
       liveUrl: 'https://github.com/Charan359/Grocery-Delivery-Analytics',
@@ -483,7 +483,7 @@ export default function App() {
       featured: false,
       hasLiveSandbox: false,
       browserUrl: 'github.com/Charan359/Grocery-Delivery-Analytics',
-      metrics: { primary: 'Rs. 12.01L', label: 'Sales Analyzed', badge: '1,559 Items' }
+      metrics: { primary: '$1.20M', label: 'Total Sales', badge: '1,559 Items • 3.92★' }
     }
   ]
 
