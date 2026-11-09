@@ -93,15 +93,15 @@ export default function Hero3DCanvas() {
     scene.add(group)
 
     // Wireframe Icosahedron (symbol of computational structure & multi-agent systems)
-    const icoGeo = new THREE.IcosahedronGeometry(4.2, 1)
+    const icoGeo = new THREE.IcosahedronGeometry(3.8, 1)
     const icoMat = new THREE.MeshBasicMaterial({
       color: 0xc8a45d,
       wireframe: true,
       transparent: true,
-      opacity: 0.22
+      opacity: 0.16
     })
     const icosahedron = new THREE.Mesh(icoGeo, icoMat)
-    icosahedron.position.set(7.5, 1.5, -4)
+    icosahedron.position.set(11.0, 3.2, -6)
     group.add(icosahedron)
 
     // Second smaller inner core

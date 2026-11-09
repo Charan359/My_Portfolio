@@ -116,7 +116,6 @@ export default function App() {
     }, 4000)
   }
 
-  const cursorRef = useRef(null)
   const watermarkRef = useRef(null)
   const portraitWrapperRef = useRef(null)
   const tickerRef = useRef(null)
@@ -228,90 +227,6 @@ export default function App() {
       setIsNamePopping(true)
     }, 60)
   }
-
-  // 2. Custom Cursor tracking with smooth lerp
-  useEffect(() => {
-    if (window.innerWidth <= 768 || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)) return
-
-    let cursorX = -100, cursorY = -100
-    let targetX = -100, targetY = -100
-    let animId
-    let hasMoved = false
-
-    const handleMouseMove = (e) => {
-      targetX = e.clientX
-      targetY = e.clientY
-      if (!hasMoved) {
-        hasMoved = true
-        cursorX = targetX
-        cursorY = targetY
-        if (cursorRef.current) {
-          cursorRef.current.style.opacity = '1'
-        }
-      }
-    }
-
-    const updateCursor = () => {
-      if (hasMoved) {
-        cursorX += (targetX - cursorX) * 0.18
-        cursorY += (targetY - cursorY) * 0.18
-        if (cursorRef.current) {
-          cursorRef.current.style.transform = `translate3d(${cursorX}px, ${cursorY}px, 0)`
-        }
-      }
-      animId = requestAnimationFrame(updateCursor)
-    }
-
-    const handleMouseLeave = () => {
-      if (cursorRef.current) cursorRef.current.style.opacity = '0'
-    }
-
-    const handleMouseEnter = () => {
-      if (hasMoved && cursorRef.current) cursorRef.current.style.opacity = '1'
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    document.addEventListener('mouseleave', handleMouseLeave)
-    document.addEventListener('mouseenter', handleMouseEnter)
-    animId = requestAnimationFrame(updateCursor)
-
-    // Hover detection for interactive elements & text readability
-    const handleMouseOver = (e) => {
-      const isText = e.target.closest('p, li, .about__text, .about__lead, .work__card-desc, .work__card-bullets, .timeline__item-desc, .skills__card-desc, .contact__subtitle')
-      if (isText && cursorRef.current) {
-        cursorRef.current.classList.add('is-text')
-      }
-
-      const target = e.target.closest('a, button, [data-magnetic], .hero__ticker-item, .hero__portrait-wrapper, .work__card, .work__bezel, .skills__card, .skills__filter-btn, .timeline__item-card, .search-modal__item, .sandbox-modal__action-btn, .sandbox-modal__device-btn, .sandbox-modal__traffic-dot')
-      if (target && cursorRef.current) {
-        cursorRef.current.classList.add('is-hover')
-      }
-    }
-
-    const handleMouseOut = (e) => {
-      const isText = e.target.closest('p, li, .about__text, .about__lead, .work__card-desc, .work__card-bullets, .timeline__item-desc, .skills__card-desc, .contact__subtitle')
-      if (isText && cursorRef.current) {
-        cursorRef.current.classList.remove('is-text')
-      }
-
-      const target = e.target.closest('a, button, [data-magnetic], .hero__ticker-item, .hero__portrait-wrapper, .work__card, .work__bezel, .skills__card, .skills__filter-btn, .timeline__item-card, .search-modal__item, .sandbox-modal__action-btn, .sandbox-modal__device-btn, .sandbox-modal__traffic-dot')
-      if (target && cursorRef.current) {
-        cursorRef.current.classList.remove('is-hover')
-      }
-    }
-
-    document.addEventListener('mouseover', handleMouseOver)
-    document.addEventListener('mouseout', handleMouseOut)
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      document.removeEventListener('mouseleave', handleMouseLeave)
-      document.removeEventListener('mouseenter', handleMouseEnter)
-      document.removeEventListener('mouseover', handleMouseOver)
-      document.removeEventListener('mouseout', handleMouseOut)
-      cancelAnimationFrame(animId)
-    }
-  }, [])
 
   // 3. Parallax Watermark
   useEffect(() => {
@@ -801,12 +716,6 @@ export default function App() {
         </div>
       </div>
 
-      {/* 2. Custom Cursor */}
-      <div className="cursor" id="cursor" ref={cursorRef}>
-        <div className="cursor__dot"></div>
-        <div className="cursor__circle"></div>
-      </div>
-
       {/* 3. Film Grain Overlay */}
       <div className="grain" aria-hidden="true"></div>
 
@@ -1260,7 +1169,7 @@ export default function App() {
         </div>
 
         {/* Scroll Indicator */}
-        <div className="hero__scroll" id="scroll-indicator" onClick={handleScrollClick} style={{ cursor: 'none' }}>
+        <div className="hero__scroll" id="scroll-indicator" onClick={handleScrollClick}>
           <div className="hero__scroll-line"></div>
           <span>scroll</span>
         </div>
