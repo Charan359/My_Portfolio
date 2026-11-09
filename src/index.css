@@ -4767,3 +4767,608 @@ body.is-loaded .hero__shapes .hero__shape {
         justify-content: flex-start;
     }
 }
+
+
+/* ========================================
+   IMMERSIVE 3D & RESEARCH EXPANSION STYLES
+   ======================================== */
+
+/* Three.js Interactive 3D Gold Particle & Geometry Environment */
+.hero__3d-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.85;
+}
+
+/* Master Prompt Hero Headline */
+.hero__headline-wrap {
+    margin: 8px 0 10px;
+}
+
+.hero__headline {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 2.2vw, 1.85rem);
+    font-weight: 500;
+    line-height: 1.35;
+    color: rgba(255, 255, 255, 0.92);
+    letter-spacing: -0.01em;
+}
+
+.hero__headline-accent {
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 600;
+}
+
+/* Animated Cycling Designation Badge */
+.hero__designation {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 5px 14px;
+    border-radius: 20px;
+    margin: 6px 0 12px;
+    backdrop-filter: blur(8px);
+}
+
+.hero__designation-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: livePulse 2s infinite ease-in-out;
+}
+
+.hero__designation-prefix {
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.hero__designation-pill {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+    animation: fadeIn 0.4s ease forwards;
+}
+
+/* ========================================
+   DEDICATED RESEARCH & PUBLICATIONS SECTION
+   ======================================== */
+.research {
+    padding: 120px 48px;
+    background: #141416;
+    position: relative;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.research__container {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.research__header {
+    margin-bottom: 48px;
+}
+
+.research__eyebrow-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.research__eyebrow-line {
+    width: 24px;
+    height: 1.5px;
+    background: var(--accent);
+}
+
+.research__eyebrow {
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--accent);
+}
+
+.research__title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3.8vw, 3.2rem);
+    font-weight: 600;
+    line-height: 1.2;
+    color: #ffffff;
+    max-width: 860px;
+    margin-bottom: 16px;
+}
+
+.research__subtitle {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    max-width: 800px;
+}
+
+.research__bento {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.research__card {
+    background: radial-gradient(circle at 80% 20%, rgba(201, 169, 110, 0.06) 0%, rgba(22, 22, 26, 0.95) 70%);
+    border: 1px solid rgba(201, 169, 110, 0.28);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4), inset 0 0 30px rgba(201, 169, 110, 0.03);
+    position: relative;
+    overflow: hidden;
+}
+
+.research__card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.research__meta-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(201, 169, 110, 0.12);
+    border: 1px solid rgba(201, 169, 110, 0.35);
+    color: var(--accent);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+.research__meta-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+    animation: livePulse 1.8s infinite;
+}
+
+.research__paper-id {
+    font-size: 0.78rem;
+    font-family: monospace;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
+.research__card-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+    font-weight: 600;
+    line-height: 1.25;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.research__author-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.research__author-badge {
+    font-size: 0.88rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.research__author-badge strong {
+    color: var(--accent);
+}
+
+.research__orcid-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(166, 206, 57, 0.12);
+    border: 1px solid rgba(166, 206, 57, 0.35);
+    color: #a6ce39;
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.research__orcid-link:hover {
+    background: #a6ce39;
+    color: #101010;
+    box-shadow: 0 0 16px rgba(166, 206, 57, 0.4);
+}
+
+.research__abstract {
+    font-size: 0.98rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.78);
+    margin-bottom: 26px;
+}
+
+.research__abstract strong {
+    color: #ffffff;
+}
+
+/* Mathematical Formulation Highlight */
+.research__formula-card {
+    background: rgba(10, 10, 14, 0.85);
+    border: 1px solid rgba(201, 169, 110, 0.25);
+    border-left: 3px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 28px;
+}
+
+.research__formula-tag {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    color: var(--accent);
+    margin-bottom: 10px;
+}
+
+.research__formula-math {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+.research__formula-math code {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.92rem;
+    color: #e5c98d;
+    white-space: nowrap;
+}
+
+.research__formula-caption {
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* Research Empirical Metrics Grid */
+.research__metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 34px;
+}
+
+.research__metric-box {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.research__metric-box:hover {
+    border-color: rgba(201, 169, 110, 0.45);
+    transform: translateY(-2px);
+}
+
+.research__metric-value {
+    font-family: var(--font-display);
+    font-size: 1.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+    margin-bottom: 4px;
+}
+
+.research__metric-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 2px;
+}
+
+.research__metric-sub {
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Visualization Container */
+.research__viz-block {
+    margin-bottom: 34px;
+}
+
+.research__viz-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.research__viz-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+    color: #ffffff;
+}
+
+.research__viz-pulse {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00e676;
+    box-shadow: 0 0 10px #00e676;
+    animation: livePulse 1.6s infinite;
+}
+
+.research__viz-note {
+    font-size: 0.74rem;
+    color: rgba(201, 169, 110, 0.85);
+    letter-spacing: 0.3px;
+}
+
+/* Research Milestones Timeline with Champagne Gold Lines */
+.research__timeline {
+    margin-bottom: 32px;
+    padding-top: 10px;
+}
+
+.research__timeline-title {
+    font-family: var(--font-display);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+
+.research__timeline-items {
+    position: relative;
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.research__timeline-items::before {
+    content: '';
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    left: 7px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent) 0%, rgba(201, 169, 110, 0.2) 100%);
+}
+
+.research__timeline-item {
+    position: relative;
+    display: flex;
+    gap: 16px;
+}
+
+.research__timeline-dot {
+    position: absolute;
+    left: -24px;
+    top: 4px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #141416;
+    border: 2px solid var(--accent);
+    box-shadow: 0 0 8px rgba(201, 169, 110, 0.35);
+}
+
+.research__timeline-dot--active {
+    background: var(--accent);
+    box-shadow: 0 0 14px var(--accent);
+}
+
+.research__timeline-content {
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
+    flex: 1;
+}
+
+.research__timeline-phase {
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+}
+
+.research__timeline-content h5 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 4px 0 6px;
+}
+
+.research__timeline-content p {
+    font-size: 0.84rem;
+    color: rgba(255, 255, 255, 0.65);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Research Actions */
+.research__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding-top: 10px;
+}
+
+.research__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    border-radius: 26px;
+    font-size: 0.86rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.research__btn--primary {
+    background: var(--accent);
+    color: #101010;
+    border: 1.5px solid var(--accent);
+    box-shadow: 0 4px 20px rgba(201, 169, 110, 0.35);
+}
+
+.research__btn--primary:hover {
+    background: #dfbe84;
+    border-color: #dfbe84;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(201, 169, 110, 0.5);
+}
+
+.research__btn-pulse {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #101010;
+    animation: livePulse 1.4s infinite;
+}
+
+.research__btn--ghost {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+}
+
+.research__btn--ghost:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(201, 169, 110, 0.1);
+    transform: translateY(-2px);
+}
+
+.research__btn--link {
+    background: transparent;
+    border: 1.5px solid transparent;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.research__btn--link:hover {
+    color: var(--accent);
+}
+
+/* ========================================
+   URBANPULSE AI TELEMETRY HUD
+   ======================================== */
+.work__urban-telemetry {
+    background: rgba(14, 15, 20, 0.85);
+    border: 1px solid rgba(0, 230, 118, 0.25);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 16px;
+}
+
+.work__telemetry-badge {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #00e676;
+    letter-spacing: 0.4px;
+    margin-bottom: 10px;
+}
+
+.work__telemetry-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #00e676;
+    box-shadow: 0 0 8px #00e676;
+    animation: livePulse 1.6s infinite;
+}
+
+.work__telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.work__telemetry-item {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+}
+
+.work__telemetry-label {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.work__telemetry-val {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-top: 2px;
+}
+
+@media (max-width: 900px) {
+    .research {
+        padding: 80px 24px;
+    }
+    .research__card {
+        padding: 24px 20px;
+    }
+    .research__metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .work__telemetry-grid {
+        grid-template-columns: 1fr;
+    }
+}

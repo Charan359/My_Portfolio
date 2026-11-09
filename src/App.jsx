@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import MarkovLatticeCanvas from './components/MarkovLatticeCanvas'
+import Hero3DCanvas from './components/Hero3DCanvas'
 
 export default function App() {
   const [preloaderProgress, setPreloaderProgress] = useState(0)
@@ -18,6 +19,22 @@ export default function App() {
   const [sandboxKey, setSandboxKey] = useState(0)
   const [isSandboxLoading, setIsSandboxLoading] = useState(true)
   const [showPrivAgentViz, setShowPrivAgentViz] = useState(false)
+
+  // Animated cycling designations for Hero section
+  const designations = [
+    'AI Engineer',
+    'Data Science Developer',
+    'Research Enthusiast',
+    'Software Developer'
+  ]
+  const [designationIdx, setDesignationIdx] = useState(0)
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setDesignationIdx((prev) => (prev + 1) % designations.length)
+    }, 2800)
+    return () => clearInterval(timer)
+  }, [designations.length])
 
   const handleOpenSandbox = (project) => {
     setSandboxProject(project)
@@ -41,6 +58,7 @@ export default function App() {
 
   const searchableItems = [
     { type: 'Section', title: 'About Me', desc: 'Background, Data Science degree & 8.41 CGPA', target: 'about' },
+    { type: 'Section', title: 'Research & Publications', desc: 'Springer Nature Proceedings (ICMMDU 2026), Paper ID: 190, LRI* formulation', target: 'research' },
     { type: 'Section', title: 'Technical Skills', desc: 'Categorized matrix across 32 technologies', target: 'skills' },
     { type: 'Section', title: 'Featured Work', desc: '5 production projects & Springer Nature paper', target: 'work' },
     { type: 'Section', title: 'Timeline & Honors', desc: 'Education milestones, Vibexathon & 6 certificates', target: 'timeline' },
@@ -760,6 +778,15 @@ export default function App() {
               About
             </a>
             <a
+              href="#research"
+              className="nav__link nav__link--research"
+              data-magnetic
+              onMouseMove={handleMagneticMove}
+              onMouseLeave={handleMagneticLeave}
+            >
+              Research
+            </a>
+            <a
               href="#skills"
               className="nav__link"
               data-magnetic
@@ -859,20 +886,24 @@ export default function App() {
                 <span className="mobile-nav__num">01</span>
                 <span className="mobile-nav__label">About Me</span>
               </a>
-              <a href="#skills" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#research" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">02</span>
+                <span className="mobile-nav__label">Research &amp; Publications</span>
+              </a>
+              <a href="#skills" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+                <span className="mobile-nav__num">03</span>
                 <span className="mobile-nav__label">Technical Skills</span>
               </a>
               <a href="#work" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
-                <span className="mobile-nav__num">03</span>
+                <span className="mobile-nav__num">04</span>
                 <span className="mobile-nav__label">Featured Work</span>
               </a>
               <a href="#timeline" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
-                <span className="mobile-nav__num">04</span>
+                <span className="mobile-nav__num">05</span>
                 <span className="mobile-nav__label">Timeline &amp; Honors</span>
               </a>
               <a href="#contact" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
-                <span className="mobile-nav__num">05</span>
+                <span className="mobile-nav__num">06</span>
                 <span className="mobile-nav__label">Get in Touch</span>
               </a>
             </div>
@@ -951,6 +982,9 @@ export default function App() {
           </div>
         </div>
 
+        {/* Three.js Interactive 3D Gold Particle & Geometry Environment */}
+        <Hero3DCanvas />
+
         {/* Watermark Text Behind */}
         <div className="hero__watermark" aria-hidden="true" id="watermark" ref={watermarkRef}>
           Charan
@@ -1026,10 +1060,21 @@ export default function App() {
                 </span>
               </span>
             </h1>
-            <p className="hero__tagline" id="hero-tagline" data-reveal>
-              <span className="hero__tagline-dash"></span>
-              AI Researcher &amp; Full-Stack Developer
-            </p>
+            
+            <div className="hero__headline-wrap" data-reveal>
+              <h2 className="hero__headline">
+                Engineering Intelligent Systems. <br className="hero__headline-break" />
+                <span className="hero__headline-accent">Protecting What Matters.</span>
+              </h2>
+            </div>
+
+            <div className="hero__designation" data-reveal>
+              <span className="hero__designation-dot"></span>
+              <span className="hero__designation-prefix">Lead Focus //</span>
+              <span className="hero__designation-pill" key={designationIdx}>
+                {designations[designationIdx]}
+              </span>
+            </div>
 
             {/* Resume Download & Social Links */}
             <div className="hero__actions-row" id="hero-socials">
@@ -1338,14 +1383,204 @@ export default function App() {
       </section>
 
       {/* ========================================
-          6. SKILLS & TECH STACK MATRIX (#skills)
+          6. RESEARCH & PUBLICATIONS (#research)
+          ======================================== */}
+      <section className="research" id="research">
+        <div className="research__container">
+          <div className="research__header">
+            <div className="research__eyebrow-wrapper">
+              <span className="research__eyebrow-line"></span>
+              <span className="research__eyebrow">// 02 &bull; RESEARCH &amp; PUBLICATIONS</span>
+            </div>
+            <h2 className="research__title">
+              Theoretical Foundations &amp; Runtime Security for Multi-Agent AI Systems.
+            </h2>
+            <p className="research__subtitle">
+              Original peer-reviewed research accepted for publication in Springer Nature conference proceedings (ICMMDU 2026, Paper ID: 190), formulating non-compensatory minimax privacy mediation.
+            </p>
+          </div>
+
+          {/* Research Spotlight Bento Card */}
+          <div className="research__bento">
+            <div className="research__card research__card--primary">
+              <div className="research__card-header">
+                <div className="research__meta-badge">
+                  <span className="research__meta-dot"></span>
+                  <span>Springer Nature Proceedings &bull; ICMMDU 2026</span>
+                </div>
+                <span className="research__paper-id">Paper ID: 190</span>
+              </div>
+
+              <h3 className="research__card-title">
+                PrivAgentShield: Policy-Aware Runtime Mediation for Multi-Agent LLMs
+              </h3>
+
+              <div className="research__author-row">
+                <div className="research__author-badge">
+                  <strong>First Author &amp; Lead Architect:</strong> Charan H S
+                </div>
+                <a
+                  href="https://orcid.org/0009-0007-0553-6192"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="research__orcid-link"
+                  title="Verify Author ORCID: 0009-0007-0553-6192"
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0C5.372 0 0 5.372 0 12s5.372 12 12 12 12-5.372 12-12S18.628 0 12 0zM7.369 4.378c.525 0 .947.431.947.947s-.422.947-.947.947a.95.95 0 0 1-.947-.947c0-.525.422-.947.947-.947zm-.722 3.038h1.444v10.041H6.647V7.416zm3.562 0h3.9c3.712 0 5.344 2.653 5.344 5.025 0 2.578-2.016 5.016-5.325 5.016h-3.919V7.416zm1.444 1.303v7.444h2.297c2.359 0 3.844-1.406 3.844-3.722 0-2.141-1.425-3.722-3.806-3.722h-2.335z"/>
+                  </svg>
+                  <span>ORCID: 0009-0007-0553-6192 ↗</span>
+                </a>
+              </div>
+
+              <p className="research__abstract">
+                <strong>Abstract &amp; Problem Overview:</strong> Multi-agent Large Language Model (LLM) architectures risk catastrophic sensitive data leakage when autonomous sub-agents communicate across heterogeneous privilege boundaries. We formulate the <em>Leakage Risk Index (LRI*)</em> &mdash; a non-compensatory minimax risk metric unifying payload sensitivity, lattice clearance dominance, and absorbing Markov reachability &mdash; enforcing dynamic runtime policy mediation without model retraining.
+              </p>
+
+              {/* Mathematical Formulation Highlight */}
+              <div className="research__formula-card">
+                <span className="research__formula-tag">MATHEMATICAL FORMULATION</span>
+                <div className="research__formula-math">
+                  <code>LRI* = min_M max_i [ S(x_i) &bull; I(L(A_i) &#8816; L(R)) &bull; P(&Omega; | A_i) ]</code>
+                </div>
+                <p className="research__formula-caption">
+                  Non-compensatory minimax evaluation ensures high sensitivity dominates average utility, preventing statistical masking of confidential tokens.
+                </p>
+              </div>
+
+              {/* Research Empirical Metrics */}
+              <div className="research__metrics-grid">
+                <div className="research__metric-box">
+                  <span className="research__metric-value">65.0%</span>
+                  <span className="research__metric-label">Privacy Leak Prevention</span>
+                  <span className="research__metric-sub">Empirical Benchmark</span>
+                </div>
+                <div className="research__metric-box">
+                  <span className="research__metric-value">74.2%</span>
+                  <span className="research__metric-label">Task Preservation</span>
+                  <span className="research__metric-sub">Utility Retained</span>
+                </div>
+                <div className="research__metric-box">
+                  <span className="research__metric-value">1.66 ms</span>
+                  <span className="research__metric-label">Runtime Latency</span>
+                  <span className="research__metric-sub">Zero Model Retraining</span>
+                </div>
+                <div className="research__metric-box">
+                  <span className="research__metric-value">31</span>
+                  <span className="research__metric-label">Execution Traces</span>
+                  <span className="research__metric-sub">Empirical Corpus</span>
+                </div>
+              </div>
+
+              {/* Interactive 3D Markov Reachability Visualization Embedded */}
+              <div className="research__viz-block">
+                <div className="research__viz-header">
+                  <div className="research__viz-title">
+                    <span className="research__viz-pulse"></span>
+                    <strong>Interactive 3D Multi-Agent Policy Lattice &amp; Markov Reachability Model</strong>
+                  </div>
+                  <span className="research__viz-note">Drag / Hover nodes to inspect policy lattice</span>
+                </div>
+                <MarkovLatticeCanvas />
+              </div>
+
+              {/* Research Milestones Timeline with Champagne Gold Lines */}
+              <div className="research__timeline">
+                <h4 className="research__timeline-title">Peer-Reviewed Acceptance &amp; Engineering Timeline</h4>
+                <div className="research__timeline-items">
+                  <div className="research__timeline-item">
+                    <div className="research__timeline-dot"></div>
+                    <div className="research__timeline-content">
+                      <span className="research__timeline-phase">Phase I &bull; Theory</span>
+                      <h5>Non-Compensatory Minimax Derivation</h5>
+                      <p>Formulated mathematical proof that average-case risk metrics fail under adversarial privilege escalation. Established lattice dominance clearance rules.</p>
+                    </div>
+                  </div>
+
+                  <div className="research__timeline-item">
+                    <div className="research__timeline-dot"></div>
+                    <div className="research__timeline-content">
+                      <span className="research__timeline-phase">Phase II &bull; Benchmark</span>
+                      <h5>31 Empirical Workflow Trace Evaluations</h5>
+                      <p>Benchmarked dynamic Information Flow Control (IFC) and ABAC over synthetic and production multi-agent conversational workloads.</p>
+                    </div>
+                  </div>
+
+                  <div className="research__timeline-item">
+                    <div className="research__timeline-dot research__timeline-dot--active"></div>
+                    <div className="research__timeline-content">
+                      <span className="research__timeline-phase">Phase III &bull; Acceptance</span>
+                      <h5>Springer Nature Proceedings (ICMMDU 2026)</h5>
+                      <p>Paper ID 190 accepted following rigorous double-blind international peer review for publication in Springer Nature series.</p>
+                    </div>
+                  </div>
+
+                  <div className="research__timeline-item">
+                    <div className="research__timeline-dot"></div>
+                    <div className="research__timeline-content">
+                      <span className="research__timeline-phase">Phase IV &bull; Production</span>
+                      <h5>Open Interactive Verification Sandbox</h5>
+                      <p>Deployed live public runtime mediation harness with multi-viewport testing and real-time policy clearance inspection.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Research Action Buttons */}
+              <div className="research__actions">
+                <button
+                  type="button"
+                  onClick={() => handleOpenSandbox(projectsData[0])}
+                  className="research__btn research__btn--primary"
+                  data-magnetic
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <span className="research__btn-pulse"></span>
+                  <span>Launch Live Verification Sandbox</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                  </svg>
+                </button>
+                <a
+                  href="https://orcid.org/0009-0007-0553-6192"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="research__btn research__btn--ghost"
+                  data-magnetic
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <span>Verified ORCID Profile</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </a>
+                <a
+                  href="#work"
+                  className="research__btn research__btn--link"
+                  data-magnetic
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <span>View in Project Showcase ↓</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================
+          7. SKILLS & TECH STACK MATRIX (#skills)
           ======================================== */}
       <section className="skills" id="skills">
         <div className="skills__container">
           <div className="skills__header">
             <div className="skills__eyebrow-wrapper">
               <span className="skills__eyebrow-line"></span>
-              <span className="skills__eyebrow">// 02 &bull; TECHNICAL PROFICIENCY</span>
+              <span className="skills__eyebrow">// 03 &bull; TECHNICAL PROFICIENCY</span>
             </div>
             <h2 className="skills__title">
               Engineered with modern frameworks, data intelligence &amp; architectural precision.
@@ -1439,14 +1674,14 @@ export default function App() {
       </section>
 
       {/* ========================================
-          7. SELECTED WORKS & RESEARCH SHOWCASE (#work)
+          8. SELECTED WORKS & RESEARCH SHOWCASE (#work)
           ======================================== */}
       <section className="work" id="work">
         <div className="work__container">
           <div className="work__header">
             <div className="work__eyebrow-wrapper">
               <span className="work__eyebrow-line"></span>
-              <span className="work__eyebrow">// 03 &bull; FEATURED PROJECTS &amp; RESEARCH</span>
+              <span className="work__eyebrow">// 04 &bull; FEATURED PROJECTS &amp; RESEARCH</span>
             </div>
             <h2 className="work__title">
               Architecting solutions that solve critical challenges in AI security, forensics &amp; urbanization.
@@ -1563,6 +1798,34 @@ export default function App() {
                       <MarkovLatticeCanvas />
                     </div>
                   )}
+
+                  {/* Interactive City Intelligence & Environmental HUD (Exclusive to UrbanPulse AI) */}
+                  {project.id === 'urbanpulse' && (
+                    <div className="work__urban-telemetry">
+                      <div className="work__telemetry-badge">
+                        <span className="work__telemetry-dot"></span>
+                        <span>Live Smart City Sensory Overlays (13 Modules)</span>
+                      </div>
+                      <div className="work__telemetry-grid">
+                        <div className="work__telemetry-item">
+                          <span className="work__telemetry-label">Thermal Comfort</span>
+                          <span className="work__telemetry-val">28.4°C &bull; Safe Zone</span>
+                        </div>
+                        <div className="work__telemetry-item">
+                          <span className="work__telemetry-label">Air Quality Index</span>
+                          <span className="work__telemetry-val">AQI 42 &bull; Good</span>
+                        </div>
+                        <div className="work__telemetry-item">
+                          <span className="work__telemetry-label">Voice AI Talkback</span>
+                          <span className="work__telemetry-val">15 Indian &amp; Global Langs</span>
+                        </div>
+                        <div className="work__telemetry-item">
+                          <span className="work__telemetry-label">Routing Engine</span>
+                          <span className="work__telemetry-val">14 Factors &bull; 6-Way Opt</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* macOS 3D Tilt Browser Bezel Preview */}
@@ -1669,14 +1932,14 @@ export default function App() {
       </section>
 
       {/* ========================================
-          8. EDUCATION, LEADERSHIP & CERTIFICATIONS (#timeline)
+          9. EDUCATION, LEADERSHIP & CERTIFICATIONS (#timeline)
           ======================================== */}
       <section className="timeline" id="timeline">
         <div className="timeline__container">
           <div className="timeline__header">
             <div className="timeline__eyebrow-wrapper">
               <span className="timeline__eyebrow-line"></span>
-              <span className="timeline__eyebrow">// 04 &bull; ACADEMIC &amp; LEADERSHIP JOURNEY</span>
+              <span className="timeline__eyebrow">// 05 &bull; ACADEMIC &amp; LEADERSHIP JOURNEY</span>
             </div>
             <h2 className="timeline__title">
               Formative milestones, hackathon leadership &amp; industry certifications.
@@ -1764,14 +2027,14 @@ export default function App() {
       </section>
 
       {/* ========================================
-          9. INTERACTIVE CONTACT & FOOTER (#contact)
+          10. INTERACTIVE CONTACT & FOOTER (#contact)
           ======================================== */}
       <section className="contact" id="contact">
         <div className="contact__container">
           <div className="contact__header">
             <div className="contact__eyebrow-wrapper">
               <span className="contact__eyebrow-line"></span>
-              <span className="contact__eyebrow">// 05 &bull; GET IN TOUCH</span>
+              <span className="contact__eyebrow">// 06 &bull; GET IN TOUCH</span>
             </div>
             <h2 className="contact__title">
               Let's engineer something extraordinary together.
@@ -1947,7 +2210,7 @@ export default function App() {
       </section>
 
       {/* ========================================
-          10. LUXURY FOOTER
+          11. LUXURY FOOTER
           ======================================== */}
       <footer className="footer">
         <div className="footer__container">
@@ -1958,13 +2221,14 @@ export default function App() {
                 <span className="footer__logo-dot"></span>
               </div>
               <p className="footer__tagline">
-                Creative developer, data science undergraduate &amp; AI researcher based in Bengaluru.
+                AI researcher, data science developer &amp; full-stack engineer based in Bengaluru.
               </p>
             </div>
 
             <div className="footer__nav">
               <a href="#hero-section" className="footer__link">Top</a>
               <a href="#about" className="footer__link">About</a>
+              <a href="#research" className="footer__link">Research</a>
               <a href="#skills" className="footer__link">Skills</a>
               <a href="#work" className="footer__link">Work</a>
               <a href="#timeline" className="footer__link">Timeline</a>
