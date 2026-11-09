@@ -19,6 +19,8 @@ export default function App() {
   const [sandboxKey, setSandboxKey] = useState(0)
   const [isSandboxLoading, setIsSandboxLoading] = useState(true)
   const [showPrivAgentViz, setShowPrivAgentViz] = useState(false)
+  const [activeSection, setActiveSection] = useState('hero')
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   // Animated cycling designations for Hero section
   const designations = [
@@ -177,6 +179,49 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleGlobalKey)
   }, [])
 
+  // Scrollspy & Back to Top listener
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowBackToTop(window.scrollY > 480)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    const sections = [
+      { id: 'hero-section', name: 'hero' },
+      { id: 'about', name: 'about' },
+      { id: 'research', name: 'research' },
+      { id: 'skills', name: 'skills' },
+      { id: 'work', name: 'work' },
+      { id: 'timeline', name: 'timeline' },
+      { id: 'contact', name: 'contact' }
+    ]
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const match = sections.find((s) => s.id === entry.target.id)
+          if (match) {
+            setActiveSection(match.name)
+          }
+        }
+      })
+    }, {
+      root: null,
+      rootMargin: '-20% 0px -50% 0px',
+      threshold: 0.1
+    })
+
+    sections.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      observer.disconnect()
+    }
+  }, [])
+
   const replayNamePop = () => {
     setIsNamePopping(false)
     setTimeout(() => {
@@ -186,7 +231,7 @@ export default function App() {
 
   // 2. Custom Cursor tracking with smooth lerp
   useEffect(() => {
-    if (window.innerWidth <= 768) return
+    if (window.innerWidth <= 768 || (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)) return
 
     let cursorX = -100, cursorY = -100
     let targetX = -100, targetY = -100
@@ -358,31 +403,37 @@ export default function App() {
     }
   }, [])
 
-  // 7. Arrow / Keyboard navigation & Ticker Projects
+  // 7. Arrow / Keyboard navigation & Ticker Projects (aligned with 5 featured projects)
   const tickerItems = [
+    {
+      id: "privagentshield",
+      title: "PrivAgentShield",
+      sub: "springer nature paper ›",
+      img: "/privagentshield-screen.png"
+    },
     {
       id: "urbanpulse",
       title: "UrbanPulse AI",
       sub: "smart city platform ›",
-      img: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?w=80&h=80&fit=crop"
+      img: "/urbanpulse-screen.png"
     },
     {
       id: "worldmonitor",
       title: "WorldMonitor",
       sub: "cybersecurity suite ›",
-      img: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=80&h=80&fit=crop"
+      img: "/worldmonitor-screen.png"
     },
     {
       id: "dvrnvr",
       title: "DVR/NVR Forensics",
       sub: "video carver (SIH) ›",
-      img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=80&h=80&fit=crop"
+      img: "/dvrnvr-screen.png"
     },
     {
-      id: "privagentshield",
-      title: "PrivAgentShield",
-      sub: "springer nature paper ›",
-      img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=80&h=80&fit=crop"
+      id: "groceryanalytics",
+      title: "Blinkit Analytics",
+      sub: "power bi ($1.20M) ›",
+      img: "/groceryanalytics-screen.png"
     }
   ]
 
@@ -770,7 +821,7 @@ export default function App() {
           <div className="nav__center" id="nav-center">
             <a
               href="#about"
-              className="nav__link"
+              className={`nav__link ${activeSection === 'about' ? 'is-active' : ''}`}
               data-magnetic
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
@@ -779,7 +830,7 @@ export default function App() {
             </a>
             <a
               href="#research"
-              className="nav__link nav__link--research"
+              className={`nav__link nav__link--research ${activeSection === 'research' ? 'is-active' : ''}`}
               data-magnetic
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
@@ -788,7 +839,7 @@ export default function App() {
             </a>
             <a
               href="#skills"
-              className="nav__link"
+              className={`nav__link ${activeSection === 'skills' ? 'is-active' : ''}`}
               data-magnetic
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
@@ -797,7 +848,7 @@ export default function App() {
             </a>
             <a
               href="#work"
-              className="nav__link"
+              className={`nav__link ${activeSection === 'work' ? 'is-active' : ''}`}
               data-magnetic
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
@@ -806,7 +857,7 @@ export default function App() {
             </a>
             <a
               href="#timeline"
-              className="nav__link"
+              className={`nav__link ${activeSection === 'timeline' ? 'is-active' : ''}`}
               data-magnetic
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
@@ -815,7 +866,7 @@ export default function App() {
             </a>
             <a
               href="#contact"
-              className="nav__link"
+              className={`nav__link ${activeSection === 'contact' ? 'is-active' : ''}`}
               data-magnetic
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
@@ -878,31 +929,31 @@ export default function App() {
             </div>
 
             <div className="mobile-nav__links">
-              <a href="#hero-section" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#hero-section" className={`mobile-nav__link ${activeSection === 'hero' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">00</span>
                 <span className="mobile-nav__label">Home</span>
               </a>
-              <a href="#about" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#about" className={`mobile-nav__link ${activeSection === 'about' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">01</span>
                 <span className="mobile-nav__label">About Me</span>
               </a>
-              <a href="#research" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#research" className={`mobile-nav__link ${activeSection === 'research' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">02</span>
                 <span className="mobile-nav__label">Research &amp; Publications</span>
               </a>
-              <a href="#skills" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#skills" className={`mobile-nav__link ${activeSection === 'skills' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">03</span>
                 <span className="mobile-nav__label">Technical Skills</span>
               </a>
-              <a href="#work" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#work" className={`mobile-nav__link ${activeSection === 'work' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">04</span>
                 <span className="mobile-nav__label">Featured Work</span>
               </a>
-              <a href="#timeline" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#timeline" className={`mobile-nav__link ${activeSection === 'timeline' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">05</span>
                 <span className="mobile-nav__label">Timeline &amp; Honors</span>
               </a>
-              <a href="#contact" className="mobile-nav__link" onClick={() => setIsMenuOpen(false)}>
+              <a href="#contact" className={`mobile-nav__link ${activeSection === 'contact' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">06</span>
                 <span className="mobile-nav__label">Get in Touch</span>
               </a>
@@ -2226,13 +2277,13 @@ export default function App() {
             </div>
 
             <div className="footer__nav">
-              <a href="#hero-section" className="footer__link">Top</a>
-              <a href="#about" className="footer__link">About</a>
-              <a href="#research" className="footer__link">Research</a>
-              <a href="#skills" className="footer__link">Skills</a>
-              <a href="#work" className="footer__link">Work</a>
-              <a href="#timeline" className="footer__link">Timeline</a>
-              <a href="#contact" className="footer__link">Contact</a>
+              <a href="#hero-section" className={`footer__link ${activeSection === 'hero' ? 'is-active' : ''}`}>Top</a>
+              <a href="#about" className={`footer__link ${activeSection === 'about' ? 'is-active' : ''}`}>About</a>
+              <a href="#research" className={`footer__link ${activeSection === 'research' ? 'is-active' : ''}`}>Research</a>
+              <a href="#skills" className={`footer__link ${activeSection === 'skills' ? 'is-active' : ''}`}>Skills</a>
+              <a href="#work" className={`footer__link ${activeSection === 'work' ? 'is-active' : ''}`}>Work</a>
+              <a href="#timeline" className={`footer__link ${activeSection === 'timeline' ? 'is-active' : ''}`}>Timeline</a>
+              <a href="#contact" className={`footer__link ${activeSection === 'contact' ? 'is-active' : ''}`}>Contact</a>
             </div>
           </div>
 
@@ -2246,6 +2297,21 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Back to Top Button */}
+      <button
+        type="button"
+        className={`back-to-top ${showBackToTop ? 'is-visible' : ''}`}
+        onClick={() => {
+          document.getElementById('hero-section')?.scrollIntoView({ behavior: 'smooth' })
+        }}
+        aria-label="Back to Top"
+        title="Scroll to Top"
+      >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          <polyline points="18 15 12 9 6 15"></polyline>
+        </svg>
+      </button>
 
       {/* ========================================
           11. INTERACTIVE LIVE SANDBOX MODAL (Zero-lag on-demand iframe)

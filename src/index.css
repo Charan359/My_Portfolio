@@ -5372,3 +5372,133 @@ body.is-loaded .hero__shapes .hero__shape {
         grid-template-columns: 1fr;
     }
 }
+
+@media (max-width: 480px) {
+    .research {
+        padding: 60px 16px;
+    }
+    .research__card {
+        padding: 18px 14px;
+        border-radius: 14px;
+    }
+    .research__metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+    .research__metric-box {
+        padding: 12px 10px;
+    }
+    .research__metric-value {
+        font-size: 1.35rem;
+    }
+    .research__formula-math {
+        padding: 10px 12px;
+    }
+    .research__actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .research__btn {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+}
+
+/* ========================================
+   ACTIVE NAV SCROLLSPY & BACK TO TOP
+   ======================================== */
+.nav__link.is-active {
+    color: var(--accent);
+}
+
+.nav__link.is-active::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 10%;
+    width: 80%;
+    height: 2px;
+    background: var(--accent);
+    box-shadow: 0 0 10px rgba(201, 169, 110, 0.75);
+    border-radius: 2px;
+}
+
+.mobile-nav__link.is-active {
+    color: var(--accent);
+    background: rgba(201, 169, 110, 0.08);
+}
+
+.mobile-nav__link.is-active .mobile-nav__num {
+    color: var(--accent);
+}
+
+.footer__link.is-active {
+    color: var(--accent);
+}
+
+/* Floating Back to Top Button */
+.back-to-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(20, 20, 24, 0.92);
+    border: 1.5px solid rgba(201, 169, 110, 0.45);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px) scale(0.9);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(201, 169, 110, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.back-to-top.is-visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+.back-to-top:hover {
+    background: var(--accent);
+    color: #101010;
+    border-color: var(--accent);
+    box-shadow: 0 8px 30px rgba(201, 169, 110, 0.55);
+    transform: translateY(-3px) scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 20px;
+        right: 20px;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Search / Jump Highlight Flash */
+.is-highlighted {
+    animation: sectionHighlight 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes sectionHighlight {
+    0% {
+        box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
+    }
+    30% {
+        box-shadow: 0 0 0 4px rgba(201, 169, 110, 0.7), 0 0 35px rgba(201, 169, 110, 0.35);
+        border-color: var(--accent) !important;
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
+    }
+}
