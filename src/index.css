@@ -1315,12 +1315,12 @@ body.is-loaded .hero__bottom {
     .hero__content {
         flex-direction: column;
         padding: 0 20px;
-        gap: 20px;
+        gap: 16px;
     }
 
     .hero__left {
         flex: 0 0 auto;
-        padding-bottom: 10px;
+        padding-bottom: 6px;
         z-index: 3;
     }
 
@@ -1332,39 +1332,65 @@ body.is-loaded .hero__bottom {
     .hero__right {
         flex: 0 0 auto;
         width: 100%;
+        display: flex;
         align-items: center;
         justify-content: center;
         position: relative;
-        min-height: 280px;
+        min-height: auto;
+        margin: 6px auto 14px;
+        z-index: 2;
     }
 
     .hero__portrait-wrapper {
         position: relative;
-        width: 75%;
-        max-width: 280px;
-        height: 280px;
-        right: auto;
-        bottom: auto;
+        width: 220px;
+        height: 220px;
+        max-width: 220px;
+        border-radius: 50%;
+        overflow: hidden;
         margin: 0 auto;
+        background: radial-gradient(circle at 50% 30%, rgba(201, 169, 110, 0.22) 0%, rgba(245, 240, 232, 0.75) 65%, rgba(201, 169, 110, 0.15) 100%);
+        border: 2px solid rgba(201, 169, 110, 0.55);
+        box-shadow: 0 10px 32px rgba(0, 0, 0, 0.12), 0 0 24px rgba(201, 169, 110, 0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        right: auto;
+        top: auto;
+        bottom: auto;
+        left: auto;
+        transform: none !important;
+    }
+
+    .hero__portrait {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+        opacity: 1 !important;
+        clip-path: none !important;
+        border-radius: 50%;
+    }
+
+    .hero__portrait img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center 12%;
+        transform: none !important;
+        filter: contrast(1.05) brightness(1.02);
+    }
+
+    .hero__portrait-frame {
+        display: none !important;
     }
 
     .hero__greeting {
-        display: none;
+        display: none !important;
     }
 
     .hero__description {
-        position: relative;
-        width: 100%;
-        max-width: 320px;
-        left: auto;
-        top: auto;
-        bottom: auto;
-        right: auto;
-        transform: none !important;
-        opacity: 1 !important;
-        pointer-events: auto !important;
-        margin: 16px auto 0;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        display: none !important;
     }
 
     .hero__watermark {
@@ -1420,9 +1446,9 @@ body.is-loaded .hero__bottom {
     }
 
     .hero__paper-spotlight {
-        width: 100%;
+        width: fit-content;
         max-width: 100%;
-        padding: 6px 12px;
+        padding: 5px 12px;
         box-sizing: border-box;
     }
 
@@ -1435,9 +1461,9 @@ body.is-loaded .hero__bottom {
     }
 
     .hero__portrait-wrapper {
-        width: 85%;
-        max-width: 240px;
-        height: 240px;
+        width: 195px;
+        height: 195px;
+        max-width: 195px;
     }
 
     .hero__more span {
