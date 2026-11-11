@@ -63,7 +63,7 @@ export default function App() {
     { type: 'Section', title: 'Research & Publications', desc: 'Springer Nature Proceedings (ICMMDU 2026), Paper ID: 190, LRI* formulation', target: 'research' },
     { type: 'Section', title: 'Technical Skills', desc: 'Categorized matrix across 32 technologies', target: 'skills' },
     { type: 'Section', title: 'Featured Work', desc: '5 production projects & Springer Nature paper', target: 'work' },
-    { type: 'Section', title: 'Timeline & Honors', desc: 'Education milestones, Vibexathon & 6 certificates', target: 'timeline' },
+    { type: 'Section', title: 'Education & Timeline', desc: 'Academic education, B.E. Data Science, Vibexathon & 6 certificates', target: 'timeline' },
     { type: 'Section', title: 'Get in Touch', desc: 'Direct email, contact form & verified socials', target: 'contact' },
     { type: 'Project', title: 'PrivAgentShield', desc: 'Policy-aware runtime mediation for multi-agent LLMs (Springer Nature)', target: 'privagentshield' },
     { type: 'Project', title: 'UrbanPulse AI', desc: 'Smart city platform with 15-language Voice AI & Leaflet overlays', target: 'urbanpulse' },
@@ -771,7 +771,7 @@ export default function App() {
               onMouseMove={handleMagneticMove}
               onMouseLeave={handleMagneticLeave}
             >
-              Timeline
+              Education &amp; Timeline
             </a>
             <a
               href="#contact"
@@ -860,7 +860,7 @@ export default function App() {
               </a>
               <a href="#timeline" className={`mobile-nav__link ${activeSection === 'timeline' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">05</span>
-                <span className="mobile-nav__label">Timeline &amp; Honors</span>
+                <span className="mobile-nav__label">Education &amp; Timeline</span>
               </a>
               <a href="#contact" className={`mobile-nav__link ${activeSection === 'contact' ? 'is-active' : ''}`} onClick={() => setIsMenuOpen(false)}>
                 <span className="mobile-nav__num">06</span>
@@ -1899,7 +1899,7 @@ export default function App() {
           <div className="timeline__header">
             <div className="timeline__eyebrow-wrapper">
               <span className="timeline__eyebrow-line"></span>
-              <span className="timeline__eyebrow">// 05 &bull; ACADEMIC &amp; LEADERSHIP JOURNEY</span>
+              <span className="timeline__eyebrow">// 05 &bull; EDUCATION &amp; TIMELINE JOURNEY</span>
             </div>
             <h2 className="timeline__title">
               Formative milestones, hackathon leadership &amp; industry certifications.
@@ -2191,7 +2191,7 @@ export default function App() {
               <a href="#research" className={`footer__link ${activeSection === 'research' ? 'is-active' : ''}`}>Research</a>
               <a href="#skills" className={`footer__link ${activeSection === 'skills' ? 'is-active' : ''}`}>Skills</a>
               <a href="#work" className={`footer__link ${activeSection === 'work' ? 'is-active' : ''}`}>Work</a>
-              <a href="#timeline" className={`footer__link ${activeSection === 'timeline' ? 'is-active' : ''}`}>Timeline</a>
+              <a href="#timeline" className={`footer__link ${activeSection === 'timeline' ? 'is-active' : ''}`}>Education &amp; Timeline</a>
               <a href="#contact" className={`footer__link ${activeSection === 'contact' ? 'is-active' : ''}`}>Contact</a>
             </div>
           </div>

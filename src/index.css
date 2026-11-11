@@ -392,7 +392,8 @@ body.is-loaded .nav {
 
 .nav__center {
     display: flex;
-    gap: 36px;
+    gap: clamp(18px, 2.2vw, 34px);
+    align-items: center;
 }
 
 .nav__link {
@@ -403,6 +404,7 @@ body.is-loaded .nav {
     letter-spacing: 0.04em;
     position: relative;
     padding: 4px 0;
+    white-space: nowrap;
     transition: color 0.3s ease;
 }
 
