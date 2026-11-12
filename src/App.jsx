@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import MarkovLatticeCanvas from './components/MarkovLatticeCanvas'
 import Hero3DCanvas from './components/Hero3DCanvas'
+import ParticleHandCanvas from './components/ParticleHandCanvas'
 
 export default function App() {
   const [preloaderProgress, setPreloaderProgress] = useState(0)
@@ -18,6 +19,7 @@ export default function App() {
   const [sandboxDevice, setSandboxDevice] = useState('desktop')
   const [sandboxKey, setSandboxKey] = useState(0)
   const [isSandboxLoading, setIsSandboxLoading] = useState(true)
+  const [handRevealingProject, setHandRevealingProject] = useState(null)
   const [showPrivAgentViz, setShowPrivAgentViz] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -39,6 +41,7 @@ export default function App() {
   }, [designations.length])
 
   const handleOpenSandbox = (project) => {
+    setHandRevealingProject(project)
     setSandboxProject(project)
     setSandboxDevice('desktop')
     setSandboxKey((prev) => prev + 1)
@@ -47,6 +50,13 @@ export default function App() {
 
   const handleCloseSandbox = () => {
     setSandboxProject(null)
+    setHandRevealingProject(null)
+  }
+
+  const handleReplayHand = () => {
+    if (sandboxProject) {
+      setHandRevealingProject(sandboxProject)
+    }
   }
 
   const handleDeviceChange = (device) => {
@@ -465,7 +475,7 @@ export default function App() {
       repoUrl: 'https://github.com/Charan359/Grocery-Delivery-Analytics',
       screenshot: '/groceryanalytics-screen.png',
       featured: false,
-      hasLiveSandbox: false,
+      hasLiveSandbox: true,
       browserUrl: 'github.com/Charan359/Grocery-Delivery-Analytics',
       metrics: { primary: '$1.20M', label: 'Total Sales', badge: '1,559 Items • 3.92★' }
     }
@@ -1691,9 +1701,10 @@ export default function App() {
                         data-magnetic
                         onMouseMove={handleMagneticMove}
                         onMouseLeave={handleMagneticLeave}
-                        title={`Launch interactive sandbox of ${project.title}`}
+                        title={`Launch 3D Particle Reveal & Live Demo of ${project.title}`}
                       >
                         <span className="work__btn-pulse"></span>
+                        <span className="work__btn-hand-icon">✋</span>
                         <span>Live Demo</span>
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <polygon points="5 3 19 12 5 21 5 3"></polygon>
@@ -1859,27 +1870,17 @@ export default function App() {
 
                       {/* Interactive Hover Trigger Overlay */}
                       <div className="work__bezel-overlay">
-                        {project.hasLiveSandbox ? (
-                          <button
-                            type="button"
-                            onClick={() => handleOpenSandbox(project)}
-                            className="work__bezel-launch-btn"
-                          >
-                            <span className="work__bezel-launch-icon">⚡</span>
-                            <span>Launch Live Demo</span>
-                          </button>
-                        ) : (
-                          <a
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="work__bezel-launch-btn"
-                          >
-                            <span>Open Project ↗</span>
-                          </a>
-                        )}
+                        <button
+                          type="button"
+                          onClick={() => handleOpenSandbox(project)}
+                          className="work__bezel-launch-btn"
+                          title="Trigger 3D Cyber Particle Hand Reveal and open live demo"
+                        >
+                          <span className="work__bezel-launch-icon">✨</span>
+                          <span>3D Reveal &bull; Live Demo</span>
+                        </button>
                         <p className="work__bezel-overlay-note">
-                          {project.hasLiveSandbox ? 'Interactive in-portfolio sandbox' : 'Direct case study & source'}
+                          Cybernetic Particle Hand &bull; Live Platform
                         </p>
                       </div>
                     </div>
@@ -2318,6 +2319,15 @@ export default function App() {
 
                 <button
                   type="button"
+                  onClick={handleReplayHand}
+                  className="sandbox-modal__action-btn"
+                  title="Replay 3D Particle Hand Reveal (Space)"
+                >
+                  <span style={{ fontSize: '13px' }}>✋</span>
+                </button>
+
+                <button
+                  type="button"
                   onClick={handleReloadSandbox}
                   className="sandbox-modal__action-btn"
                   title="Reload Live App"
@@ -2352,9 +2362,18 @@ export default function App() {
               </div>
             </div>
 
-            {/* Viewport Frame with On-Demand Live Iframe */}
+            {/* Viewport Frame with On-Demand Live Iframe / Power BI Showcase */}
             <div className="sandbox-modal__viewport-wrap">
-              {isSandboxLoading && (
+              {/* 3D Cybernetic Particle Hand Reveal (Pinterest Point-Cloud Dissolve) */}
+              {handRevealingProject && (
+                <ParticleHandCanvas
+                  project={handRevealingProject}
+                  onComplete={() => setHandRevealingProject(null)}
+                  onSkip={() => setHandRevealingProject(null)}
+                />
+              )}
+
+              {isSandboxLoading && sandboxProject.id !== 'groceryanalytics' && (
                 <div className="sandbox-modal__loader">
                   <div className="sandbox-modal__spinner"></div>
                   <div className="sandbox-modal__loader-info">
@@ -2364,15 +2383,63 @@ export default function App() {
                 </div>
               )}
 
-              <iframe
-                key={sandboxKey}
-                src={sandboxProject.liveUrl}
-                title={`Live Demo of ${sandboxProject.title}`}
-                className="sandbox-modal__iframe"
-                loading="eager"
-                allow="geolocation; microphone; camera; midi; encrypted-media; clipboard-read; clipboard-write;"
-                onLoad={() => setIsSandboxLoading(false)}
-              ></iframe>
+              {sandboxProject.id === 'groceryanalytics' ? (
+                <div className="sandbox-modal__powerbi-view">
+                  <div className="sandbox-modal__powerbi-kpis">
+                    <div className="sandbox-modal__powerbi-kpi">
+                      <span className="sandbox-modal__powerbi-val">$1.20M</span>
+                      <span className="sandbox-modal__powerbi-lbl">Total Sales (Rs. 12.01 Lakhs)</span>
+                    </div>
+                    <div className="sandbox-modal__powerbi-kpi">
+                      <span className="sandbox-modal__powerbi-val">1,559</span>
+                      <span className="sandbox-modal__powerbi-lbl">Items Analyzed</span>
+                    </div>
+                    <div className="sandbox-modal__powerbi-kpi">
+                      <span className="sandbox-modal__powerbi-val">$140.99</span>
+                      <span className="sandbox-modal__powerbi-lbl">Average Sales</span>
+                    </div>
+                    <div className="sandbox-modal__powerbi-kpi">
+                      <span className="sandbox-modal__powerbi-val">3.92 ★</span>
+                      <span className="sandbox-modal__powerbi-lbl">Average Rating</span>
+                    </div>
+                  </div>
+                  <div className="sandbox-modal__powerbi-media">
+                    <img
+                      src="/groceryanalytics-screen.png"
+                      alt="Blinkit Grocery Delivery Analytics Dashboard"
+                      className="sandbox-modal__powerbi-img"
+                    />
+                  </div>
+                  <div className="sandbox-modal__powerbi-cta">
+                    <div className="sandbox-modal__powerbi-note">
+                      <strong>Enterprise Power BI &amp; DAX Model Architecture</strong>
+                      <p>Interactive sales distribution analysis across Tier 1–3 outlets, outlet sizing, and SKU-level logistics.</p>
+                    </div>
+                    <a
+                      href={sandboxProject.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="sandbox-modal__powerbi-btn"
+                    >
+                      <span>View DAX Repository on GitHub</span>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                        <polyline points="7 7 17 7 17 17"></polyline>
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              ) : (
+                <iframe
+                  key={sandboxKey}
+                  src={sandboxProject.liveUrl}
+                  title={`Live Demo of ${sandboxProject.title}`}
+                  className="sandbox-modal__iframe"
+                  loading="eager"
+                  allow="geolocation; microphone; camera; midi; encrypted-media; clipboard-read; clipboard-write;"
+                  onLoad={() => setIsSandboxLoading(false)}
+                ></iframe>
+              )}
             </div>
 
             {/* Sandbox Footer Bar */}
