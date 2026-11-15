@@ -225,9 +225,26 @@ export default function App() {
       if (el) observer.observe(el)
     })
 
+    // High-performance scroll-reveal observer
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-inview')
+        }
+      })
+    }, {
+      root: null,
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    })
+
+    const revealElements = document.querySelectorAll('[data-scroll-reveal]')
+    revealElements.forEach((el) => revealObserver.observe(el))
+
     return () => {
       window.removeEventListener('scroll', handleScroll)
       observer.disconnect()
+      revealObserver.disconnect()
     }
   }, [])
 
@@ -1225,7 +1242,7 @@ export default function App() {
       {/* ========================================
           5. ABOUT ME & BIO SECTION (#about)
           ======================================== */}
-      <section className="about" id="about">
+      <section className="about" id="about" data-scroll-reveal>
         <div className="about__container">
           <div className="about__header">
             <div className="about__eyebrow-wrapper">
@@ -1355,7 +1372,7 @@ export default function App() {
       {/* ========================================
           6. RESEARCH & PUBLICATIONS (#research)
           ======================================== */}
-      <section className="research" id="research">
+      <section className="research" id="research" data-scroll-reveal>
         <div className="research__container">
           <div className="research__header">
             <div className="research__eyebrow-wrapper">
@@ -1545,7 +1562,7 @@ export default function App() {
       {/* ========================================
           7. SKILLS & TECH STACK MATRIX (#skills)
           ======================================== */}
-      <section className="skills" id="skills">
+      <section className="skills" id="skills" data-scroll-reveal>
         <div className="skills__container">
           <div className="skills__header">
             <div className="skills__eyebrow-wrapper">
@@ -1646,7 +1663,7 @@ export default function App() {
       {/* ========================================
           8. SELECTED WORKS & RESEARCH SHOWCASE (#work)
           ======================================== */}
-      <section className="work" id="work">
+      <section className="work" id="work" data-scroll-reveal>
         <div className="work__container">
           <div className="work__header">
             <div className="work__eyebrow-wrapper">
@@ -1895,7 +1912,7 @@ export default function App() {
       {/* ========================================
           9. EDUCATION, LEADERSHIP & CERTIFICATIONS (#timeline)
           ======================================== */}
-      <section className="timeline" id="timeline">
+      <section className="timeline" id="timeline" data-scroll-reveal>
         <div className="timeline__container">
           <div className="timeline__header">
             <div className="timeline__eyebrow-wrapper">
@@ -1990,7 +2007,7 @@ export default function App() {
       {/* ========================================
           10. INTERACTIVE CONTACT & FOOTER (#contact)
           ======================================== */}
-      <section className="contact" id="contact">
+      <section className="contact" id="contact" data-scroll-reveal>
         <div className="contact__container">
           <div className="contact__header">
             <div className="contact__eyebrow-wrapper">

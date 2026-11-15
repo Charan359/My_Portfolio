@@ -1482,6 +1482,39 @@ body.is-loaded .hero__shapes .hero__shape {
     animation-play-state: running;
 }
 
+/* ===== SCROLL REVEAL UTILITIES & 3D CARD ELEVATIONS ===== */
+[data-scroll-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+}
+
+[data-scroll-reveal].is-inview {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-scroll-reveal].delay-1 { transition-delay: 0.1s; }
+[data-scroll-reveal].delay-2 { transition-delay: 0.2s; }
+[data-scroll-reveal].delay-3 { transition-delay: 0.3s; }
+[data-scroll-reveal].delay-4 { transition-delay: 0.4s; }
+
+.about__stat-card,
+.skills__card,
+.timeline__item,
+.timeline__cert-card {
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+}
+
+.about__stat-card:hover,
+.skills__card:hover,
+.timeline__item:hover,
+.timeline__cert-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.08), 0 0 24px rgba(201, 169, 110, 0.14);
+}
+
 /* ========================================
    TASK 1: ABOUT ME & BIO SECTION (#about)
    ======================================== */

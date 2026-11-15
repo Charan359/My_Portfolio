@@ -233,16 +233,19 @@ export default function Hero3DCanvas() {
     }, { threshold: 0.05 })
     observer.observe(container)
 
-    // 8. Animation Loop — Floating all over the first page
+    // 8. Animation Loop — High-precision timer & pause when off-screen
     let animId
-    const clock = new THREE.Clock()
+    let lastTime = performance.now()
+    const startTime = performance.now()
 
     const animate = () => {
       animId = requestAnimationFrame(animate)
       if (!isVisible) return
 
-      const delta = clock.getDelta()
-      const time = clock.getElapsedTime()
+      const now = performance.now()
+      const delta = Math.min((now - lastTime) * 0.001, 0.1)
+      lastTime = now
+      const time = (now - startTime) * 0.001
 
       if (!prefersReducedMotion) {
         // Smooth camera lerp with mouse movement
