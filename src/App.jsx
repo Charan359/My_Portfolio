@@ -26,6 +26,25 @@ export default function App() {
   const [activeProjectFilter, setActiveProjectFilter] = useState('all')
   const [copiedBibtex, setCopiedBibtex] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
+  const [workViewMode, setWorkViewMode] = useState('single')
+
+  const handleWorkPrev = () => {
+    setActiveProjectIdx((prev) => (prev > 0 ? prev - 1 : projectsData.length - 1))
+  }
+
+  const handleWorkNext = () => {
+    setActiveProjectIdx((prev) => (prev < projectsData.length - 1 ? prev + 1 : 0))
+  }
+
+  const handleFilterClick = (tabId) => {
+    setActiveProjectFilter(tabId)
+    if (tabId !== 'all') {
+      const matchIdx = projectsData.findIndex((p) => p.filterCategory === tabId)
+      if (matchIdx !== -1) {
+        setActiveProjectIdx(matchIdx)
+      }
+    }
+  }
 
   // Animated cycling designations for Hero section
   const designations = [
@@ -1769,7 +1788,7 @@ export default function App() {
                 role="tab"
                 aria-selected={activeProjectFilter === tab.id}
                 className={`work__filter-pill ${activeProjectFilter === tab.id ? 'is-active' : ''}`}
-                onClick={() => setActiveProjectFilter(tab.id)}
+                onClick={() => handleFilterClick(tab.id)}
               >
                 <span>{tab.label}</span>
                 <span className="work__filter-count">{tab.count}</span>
@@ -1777,8 +1796,96 @@ export default function App() {
             ))}
           </div>
 
+          {/* Interactive Direct Project Reveal Buttons */}
+          <div className="work__reveal-panel" id="work-showcase">
+            <div className="work__reveal-nav">
+              <span className="work__reveal-label">SELECT PROJECT TO REVEAL:</span>
+              <div className="work__view-modes">
+                <button
+                  type="button"
+                  className={`work__mode-btn ${workViewMode === 'single' ? 'is-active' : ''}`}
+                  onClick={() => setWorkViewMode('single')}
+                  title="Direct 1-click reveal mode (no scrolling required)"
+                >
+                  <span>✦ Focused Showcase</span>
+                </button>
+                <button
+                  type="button"
+                  className={`work__mode-btn ${workViewMode === 'all' ? 'is-active' : ''}`}
+                  onClick={() => setWorkViewMode('all')}
+                  title="View all 5 projects stacked"
+                >
+                  <span>☰ View All (5)</span>
+                </button>
+              </div>
+            </div>
+
+            <div className="work__project-tabs" role="tablist" aria-label="Direct project selection buttons">
+              {projectsData.map((project, idx) => (
+                <button
+                  key={project.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeProjectIdx === idx && workViewMode === 'single'}
+                  className={`work__project-tab-btn ${activeProjectIdx === idx && workViewMode === 'single' ? 'is-active' : ''}`}
+                  onClick={() => {
+                    setActiveProjectIdx(idx)
+                    setWorkViewMode('single')
+                  }}
+                  title={`Click to reveal ${project.title}`}
+                >
+                  <span className="work__tab-num">{project.number}</span>
+                  <span className="work__tab-name">{project.title}</span>
+                  {project.featured && <span className="work__tab-star">★ Springer</span>}
+                </button>
+              ))}
+            </div>
+
+            {/* Stepper bar when in Focused Showcase mode */}
+            {workViewMode === 'single' && (
+              <div className="work__stepper-row">
+                <button
+                  type="button"
+                  className="work__stepper-arrow"
+                  onClick={handleWorkPrev}
+                  aria-label="Previous project"
+                >
+                  ← Prev
+                </button>
+                <div className="work__stepper-dots">
+                  {projectsData.map((proj, dotIdx) => (
+                    <button
+                      key={proj.id}
+                      type="button"
+                      className={`work__stepper-dot ${activeProjectIdx === dotIdx ? 'is-active' : ''}`}
+                      onClick={() => {
+                        setActiveProjectIdx(dotIdx)
+                        setWorkViewMode('single')
+                      }}
+                      title={`Reveal ${proj.title}`}
+                      aria-label={`Reveal Project ${dotIdx + 1}: ${proj.title}`}
+                    >
+                      <span>{proj.number}</span>
+                    </button>
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  className="work__stepper-arrow"
+                  onClick={handleWorkNext}
+                  aria-label="Next project"
+                >
+                  Next →
+                </button>
+              </div>
+            )}
+          </div>
+
           <div className="work__grid">
-            {filteredProjects.map((project) => (
+            {(workViewMode === 'single'
+              ? [projectsData[activeProjectIdx] || projectsData[0]]
+              : filteredProjects
+            ).map((project) => (
               <article key={project.id} id={project.id} className={`work__card ${project.featured ? 'work__card--featured' : ''}`}>
                 <div className="work__card-header">
                   <span className="work__card-number">{project.number}</span>

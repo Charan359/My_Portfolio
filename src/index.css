@@ -5920,7 +5920,7 @@ body.is-loaded .hero__shapes .hero__shape {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 42px;
+    margin-bottom: 24px;
     flex-wrap: wrap;
 }
 
@@ -5931,42 +5931,236 @@ body.is-loaded .hero__shapes .hero__shape {
     padding: 8px 18px;
     border-radius: 20px;
     font-size: 0.82rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.7);
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    font-weight: 600;
+    color: #2b2723 !important;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(20, 20, 25, 0.16);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
 }
 
 .work__filter-pill:hover {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(201, 169, 110, 0.4);
+    color: #000000 !important;
+    background: #ffffff;
+    border-color: rgba(201, 169, 110, 0.75);
+    box-shadow: 0 4px 16px rgba(201, 169, 110, 0.22);
     transform: translateY(-2px);
 }
 
 .work__filter-pill.is-active {
-    color: #121214;
-    background: var(--accent);
-    border-color: var(--accent);
-    font-weight: 600;
-    box-shadow: 0 4px 18px rgba(201, 169, 110, 0.35);
+    color: #141414 !important;
+    background: #c9a96e;
+    border-color: #c9a96e;
+    font-weight: 700;
+    box-shadow: 0 4px 18px rgba(201, 169, 110, 0.4);
 }
 
 .work__filter-count {
     font-size: 0.72rem;
     padding: 2px 7px;
     border-radius: 10px;
-    background: rgba(0, 0, 0, 0.2);
-    color: inherit;
-    font-weight: 600;
+    background: rgba(0, 0, 0, 0.08);
+    color: #2b2723;
+    font-weight: 700;
 }
 
 .work__filter-pill.is-active .work__filter-count {
-    background: rgba(0, 0, 0, 0.25);
-    color: #121214;
+    background: rgba(0, 0, 0, 0.18);
+    color: #141414;
+}
+
+/* ==========================================================================
+   DIRECT PROJECT REVEAL PANEL & SWITCHER BUTTONS (01 - 05)
+   ========================================================================== */
+.work__reveal-panel {
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(201, 169, 110, 0.38);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    border-radius: 18px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.work__reveal-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.work__reveal-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #6b6359;
+}
+
+.work__view-modes {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(20, 20, 25, 0.06);
+    padding: 3px;
+    border-radius: 12px;
+    border: 1px solid rgba(20, 20, 25, 0.08);
+}
+
+.work__mode-btn {
+    padding: 5px 12px;
+    border-radius: 9px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #666;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    border: none;
+}
+
+.work__mode-btn.is-active {
+    background: #ffffff;
+    color: #141414;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.work__project-tabs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.work__project-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 18px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1.5px solid rgba(20, 20, 25, 0.12);
+    color: #2b2723;
+    font-size: 0.86rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.work__project-tab-btn:hover {
+    background: #ffffff;
+    border-color: rgba(201, 169, 110, 0.7);
+    color: #000000;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(201, 169, 110, 0.18);
+}
+
+.work__project-tab-btn.is-active {
+    background: #141416;
+    color: #ffffff;
+    border-color: #141416;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18), 0 0 16px rgba(201, 169, 110, 0.25);
+    transform: translateY(-2px);
+}
+
+.work__tab-num {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+    background: rgba(201, 169, 110, 0.16);
+    padding: 2px 7px;
+    border-radius: 6px;
+}
+
+.work__project-tab-btn.is-active .work__tab-num {
+    background: rgba(201, 169, 110, 0.3);
+    color: #e5c98d;
+}
+
+.work__tab-star {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #a47822;
+    background: rgba(201, 169, 110, 0.2);
+    padding: 2px 7px;
+    border-radius: 6px;
+}
+
+.work__project-tab-btn.is-active .work__tab-star {
+    background: rgba(201, 169, 110, 0.35);
+    color: #f3d89d;
+}
+
+/* Stepper Row */
+.work__stepper-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(20, 20, 25, 0.08);
+}
+
+.work__stepper-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #2b2723;
+    background: rgba(20, 20, 25, 0.04);
+    border: 1px solid rgba(20, 20, 25, 0.1);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.work__stepper-arrow:hover {
+    background: #141416;
+    color: #ffffff;
+}
+
+.work__stepper-dots {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.work__stepper-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    background: rgba(20, 20, 25, 0.05);
+    color: #666;
+    border: 1px solid rgba(20, 20, 25, 0.12);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.work__stepper-dot:hover {
+    border-color: var(--accent);
+    color: #141414;
+}
+
+.work__stepper-dot.is-active {
+    background: var(--accent);
+    color: #141414;
+    border-color: var(--accent);
+    box-shadow: 0 0 10px rgba(201, 169, 110, 0.5);
+    transform: scale(1.1);
 }
 
 /* Toast Notification */
