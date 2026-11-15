@@ -4857,49 +4857,64 @@ body.is-loaded .hero__shapes .hero__shape {
     font-weight: 700;
 }
 
-/* Animated Cycling Designation Badge */
+/* Animated Cycling Designation Badge — Luxury Jewel Pill */
 .hero__designation {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     width: fit-content;
     max-width: fit-content;
     align-self: flex-start;
-    background: rgba(20, 20, 25, 0.05);
-    border: 1px solid rgba(20, 20, 25, 0.12);
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin: 6px 0 14px;
-    backdrop-filter: blur(8px);
+    background: rgba(255, 255, 255, 0.78);
+    border: 1px solid rgba(201, 169, 110, 0.42);
+    box-shadow: 0 4px 20px rgba(20, 20, 25, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    padding: 6px 16px;
+    border-radius: 24px;
+    margin: 8px 0 16px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+}
+
+.hero__designation:hover {
+    border-color: rgba(201, 169, 110, 0.75);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 6px 24px rgba(201, 169, 110, 0.18);
 }
 
 .hero__designation-dot {
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #a47822;
-    box-shadow: 0 0 8px #a47822;
+    box-shadow: 0 0 10px #a47822;
     animation: livePulse 2s infinite ease-in-out;
+    flex-shrink: 0;
 }
 
 .hero__designation-prefix {
-    font-size: 0.72rem;
+    font-size: 0.74rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #555555;
+    letter-spacing: 1px;
+    color: #4a453e;
+    user-select: none;
+    white-space: nowrap;
 }
 
 .hero__designation-pill {
     font-size: 0.82rem;
     font-weight: 700;
     color: #141414;
-    background: rgba(201, 169, 110, 0.28);
+    background: rgba(201, 169, 110, 0.22);
     padding: 3px 12px;
     border-radius: 14px;
-    border: 1px solid rgba(180, 140, 70, 0.45);
+    border: 1px solid rgba(180, 140, 70, 0.38);
     letter-spacing: 0.3px;
     animation: fadeIn 0.4s ease forwards;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 /* ========================================
@@ -5099,19 +5114,32 @@ body.is-loaded .hero__shapes .hero__shape {
 }
 
 .research__formula-math {
-    background: rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(201, 169, 110, 0.2);
     border-radius: 8px;
-    padding: 12px 16px;
+    padding: 14px 18px;
     overflow-x: auto;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(201, 169, 110, 0.4) transparent;
+}
+
+.research__formula-math::-webkit-scrollbar {
+    height: 4px;
+}
+
+.research__formula-math::-webkit-scrollbar-thumb {
+    background: rgba(201, 169, 110, 0.4);
+    border-radius: 2px;
 }
 
 .research__formula-math code {
-    font-family: 'Fira Code', monospace;
-    font-size: 0.92rem;
-    color: #e5c98d;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    font-size: clamp(0.74rem, 2.2vw, 0.95rem);
+    color: #f3d89d;
     white-space: nowrap;
+    display: inline-block;
+    letter-spacing: 0.02em;
 }
 
 .research__formula-caption {

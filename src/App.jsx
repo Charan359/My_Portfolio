@@ -2322,6 +2322,7 @@ export default function App() {
                   onClick={handleReplayHand}
                   className="sandbox-modal__action-btn"
                   title="Replay 3D Particle Hand Reveal (Space)"
+                  aria-label="Replay 3D Particle Hand Reveal Animation"
                 >
                   <span style={{ fontSize: '13px' }}>✋</span>
                 </button>
@@ -2331,6 +2332,7 @@ export default function App() {
                   onClick={handleReloadSandbox}
                   className="sandbox-modal__action-btn"
                   title="Reload Live App"
+                  aria-label="Reload Live Demonstration Application"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <polyline points="23 4 23 10 17 10"></polyline>
@@ -2344,6 +2346,7 @@ export default function App() {
                   rel="noreferrer"
                   className="sandbox-modal__action-btn"
                   title="Open in Full Browser Tab"
+                  aria-label="Open Live Application in Full Browser Tab"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -2356,6 +2359,7 @@ export default function App() {
                   onClick={handleCloseSandbox}
                   className="sandbox-modal__close-btn"
                   title="Close (Esc)"
+                  aria-label="Close Demonstration Sandbox"
                 >
                   &times;
                 </button>
