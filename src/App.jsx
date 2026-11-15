@@ -1252,10 +1252,10 @@ export default function App() {
           </div>
 
           <div className="hero__right">
-            {/* Real Research Hook instead of filler */}
+            {/* Welcome Greeting safely positioned in top right */}
             <div className="hero__greeting" id="hero-greeting">
               <span className="hero__greeting-line"></span>
-              <p>65.0% privacy leakage prevention in multi-agent LLMs &bull; Springer Nature Accepted</p>
+              <p>Welcome to my portfolio</p>
             </div>
 
             {/* Portrait Image with 3D tilt — half-page layout */}
