@@ -46,12 +46,12 @@ export default function App() {
     }
   }
 
-  // Animated cycling designations for Hero section
+  // Animated cycling designations for Hero section (Aligned for Data Science, AI & Analytics)
   const designations = [
-    'AI Engineer',
     'Data Science Developer',
-    'Research Enthusiast',
-    'Software Developer'
+    'AI & Machine Learning Enthusiast',
+    'Data Analyst & BI Developer',
+    'Research Author (Springer Nature)'
   ]
   const [designationIdx, setDesignationIdx] = useState(0)
 
@@ -667,25 +667,8 @@ export default function App() {
     }
   ]
 
-  // Task 2: Categorized Skill Matrix with Contextual Verification & Project Proof
+  // Task 2: Categorized Skill Matrix Aligned for Data Science, AI & Analytical Engineering
   const skillCategories = [
-    {
-      id: 'languages',
-      title: 'Programming & Core Foundations',
-      subtitle: 'Algorithmic problem-solving and systems design',
-      iconType: 'code',
-      badge: 'Core Languages',
-      skills: [
-        { name: 'Python', proof: 'PrivAgentShield & LRI*', tag: 'Research Math & FastAPI' },
-        { name: 'Java', proof: 'Oracle Certified', tag: 'OOP & Modular Architecture' },
-        { name: 'C', proof: 'Systems Programming', tag: 'Memory & Bitwise Operations' },
-        { name: 'C++', proof: 'NCET Data Science', tag: 'DSA & Algorithmic Optimization' },
-        { name: 'JavaScript (ES6+)', proof: 'UrbanPulse AI', tag: 'Async Engine & Reactive State' },
-        { name: 'SQL', proof: 'Oracle 23ai Certified', tag: 'Relational Modeling & Query Tuning' },
-        { name: 'Data Structures & Algorithms', proof: '8.41 CGPA Core', tag: 'O(n log n) Complexity Tuning' },
-        { name: 'Object-Oriented Design', proof: 'Production Architect', tag: 'Design Patterns & Clean Code' },
-      ]
-    },
     {
       id: 'ai',
       title: 'AI, Machine Learning & Analytics',
@@ -705,6 +688,40 @@ export default function App() {
       ]
     },
     {
+      id: 'languages',
+      title: 'Programming & Core Foundations',
+      subtitle: 'Algorithmic problem-solving and systems design',
+      iconType: 'code',
+      badge: 'Core Languages',
+      skills: [
+        { name: 'Python', proof: 'PrivAgentShield & LRI*', tag: 'Research Math & FastAPI' },
+        { name: 'SQL', proof: 'Oracle 23ai Certified', tag: 'Relational Modeling & Query Tuning' },
+        { name: 'C++', proof: 'NCET Data Science', tag: 'DSA & Algorithmic Optimization' },
+        { name: 'Java', proof: 'Oracle Certified', tag: 'OOP & Modular Architecture' },
+        { name: 'C', proof: 'Systems Programming', tag: 'Memory & Bitwise Operations' },
+        { name: 'JavaScript (ES6+)', proof: 'UrbanPulse AI', tag: 'Async Engine & Reactive State' },
+        { name: 'Data Structures & Algorithms', proof: '8.41 CGPA Core', tag: 'O(n log n) Complexity Tuning' },
+        { name: 'Object-Oriented Design', proof: 'Production Architect', tag: 'Design Patterns & Clean Code' },
+      ]
+    },
+    {
+      id: 'tools',
+      title: 'Databases, Cloud & Analytics Tools',
+      subtitle: 'Resilient data persistence, cloud infrastructure and verification',
+      iconType: 'security',
+      badge: 'Data & Infra Tools',
+      skills: [
+        { name: 'MySQL', proof: 'ACID Relational', tag: 'Relational Schemas & Indexing' },
+        { name: 'MongoDB', proof: 'Document Store', tag: 'Aggregation & JSON Pipelines' },
+        { name: 'Jupyter Notebook', proof: 'EDA & Prototyping', tag: 'Interactive Data Science Sandbox' },
+        { name: 'Supabase', proof: 'Live UrbanPulse DB', tag: 'PostgreSQL Realtime & Auth' },
+        { name: 'Oracle Cloud (OCI)', proof: 'Certified 2025', tag: 'OCI AI Foundations & Infrastructure' },
+        { name: 'Git & GitHub', proof: 'Daily Open Source', tag: 'Version Control & GitHub Actions' },
+        { name: 'Linux & Bash', proof: 'Terminal Native', tag: 'CLI Scripting & Disk Forensic Env' },
+        { name: 'SHA-256 Forensics', proof: 'SIH 2026 Nominated', tag: 'ISO/IEC 27037 Evidence Integrity' },
+      ]
+    },
+    {
       id: 'web',
       title: 'Full-Stack & Web Engineering',
       subtitle: 'Modern reactive interfaces and robust backend microservices',
@@ -718,23 +735,6 @@ export default function App() {
         { name: 'HTML5 & CSS3', proof: 'Pixel Precision', tag: 'CSS 3D Transforms & Web Standards' },
         { name: 'RESTful API Architecture', proof: 'Enterprise Standard', tag: 'JSON Endpoint Specification' },
         { name: 'WebSockets', proof: 'WorldMonitor Realtime', tag: 'Bidirectional Scan Streaming' },
-      ]
-    },
-    {
-      id: 'tools',
-      title: 'Databases, Cloud & Security',
-      subtitle: 'Resilient data persistence, cloud infrastructure and verification',
-      iconType: 'security',
-      badge: 'Infra & Forensic Tools',
-      skills: [
-        { name: 'MySQL', proof: 'ACID Relational', tag: 'Relational Schemas & Indexing' },
-        { name: 'MongoDB', proof: 'Document Store', tag: 'Aggregation & JSON Pipelines' },
-        { name: 'Supabase', proof: 'Live UrbanPulse DB', tag: 'PostgreSQL Realtime & Auth' },
-        { name: 'Oracle Cloud (OCI)', proof: 'Certified 2025', tag: 'OCI AI Foundations & Infrastructure' },
-        { name: 'Git & GitHub', proof: 'Daily Open Source', tag: 'Version Control & GitHub Actions' },
-        { name: 'Linux & Bash', proof: 'Terminal Native', tag: 'CLI Scripting & Disk Forensic Env' },
-        { name: 'Jupyter Notebook', proof: 'EDA & Prototyping', tag: 'Interactive Data Science Sandbox' },
-        { name: 'SHA-256 Forensics', proof: 'SIH 2026 Nominated', tag: 'ISO/IEC 27037 Evidence Integrity' },
       ]
     }
   ]
@@ -1347,10 +1347,10 @@ export default function App() {
                 I am <span className="about__highlight">Charan H S</span>, a Computer Science (Data Science) undergraduate at <strong>Nagarjuna College of Engineering and Technology</strong>, Bengaluru, maintaining an <strong>8.41 CGPA</strong>.
               </p>
               <p className="about__text">
-                My work bridges high-performance web engineering with artificial intelligence and digital security. As the <strong>First Author</strong> of <em>PrivAgentShield</em> &mdash; accepted for publication in <strong>Springer Nature</strong> proceedings (ICMMDU 2026) &mdash; I focus on solving real-world privacy leakage and policy runtime mediation in multi-agent LLM systems.
+                My work bridges applied data science and machine learning with intelligent systems and digital security. As the <strong>First Author</strong> of <em>PrivAgentShield</em> &mdash; accepted for publication in <strong>Springer Nature</strong> proceedings (ICMMDU 2026) &mdash; I focus on solving real-world privacy leakage and policy runtime mediation in multi-agent LLM systems.
               </p>
               <p className="about__text">
-                From engineering accessibility-first smart city platforms featuring multilingual Voice AI to building digital forensics video recovery suites for the Smart India Hackathon (SIH 2026), I thrive on transforming complex algorithms into intuitive, high-impact digital experiences.
+                From engineering accessibility-first smart city platforms featuring multilingual Voice AI to building digital forensics video recovery suites for the Smart India Hackathon (SIH 2026), I thrive on transforming complex datasets and mathematical models into actionable, high-impact intelligent solutions.
               </p>
 
               {/* Achievement Badges */}
