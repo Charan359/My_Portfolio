@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import MarkovLatticeCanvas from './components/MarkovLatticeCanvas'
 import Hero3DCanvas from './components/Hero3DCanvas'
-import ParticleHandCanvas from './components/ParticleHandCanvas'
 
 export default function App() {
   const [preloaderProgress, setPreloaderProgress] = useState(0)
@@ -19,7 +18,6 @@ export default function App() {
   const [sandboxDevice, setSandboxDevice] = useState('desktop')
   const [sandboxKey, setSandboxKey] = useState(0)
   const [isSandboxLoading, setIsSandboxLoading] = useState(true)
-  const [handRevealingProject, setHandRevealingProject] = useState(null)
   const [showPrivAgentViz, setShowPrivAgentViz] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [showBackToTop, setShowBackToTop] = useState(false)
@@ -63,7 +61,6 @@ export default function App() {
   }, [designations.length])
 
   const handleOpenSandbox = (project) => {
-    setHandRevealingProject(project)
     setSandboxProject(project)
     setSandboxDevice('desktop')
     setSandboxKey((prev) => prev + 1)
@@ -72,13 +69,6 @@ export default function App() {
 
   const handleCloseSandbox = () => {
     setSandboxProject(null)
-    setHandRevealingProject(null)
-  }
-
-  const handleReplayHand = () => {
-    if (sandboxProject) {
-      setHandRevealingProject(sandboxProject)
-    }
   }
 
   const handleDeviceChange = (device) => {
@@ -2542,16 +2532,6 @@ export default function App() {
 
                 <button
                   type="button"
-                  onClick={handleReplayHand}
-                  className="sandbox-modal__action-btn"
-                  title="Replay 3D Particle Hand Reveal (Space)"
-                  aria-label="Replay 3D Particle Hand Reveal Animation"
-                >
-                  <span style={{ fontSize: '13px' }}>✋</span>
-                </button>
-
-                <button
-                  type="button"
                   onClick={handleReloadSandbox}
                   className="sandbox-modal__action-btn"
                   title="Reload Live App"
@@ -2591,15 +2571,6 @@ export default function App() {
 
             {/* Viewport Frame with On-Demand Live Iframe / Power BI Showcase */}
             <div className="sandbox-modal__viewport-wrap">
-              {/* 3D Cybernetic Particle Hand Reveal (Pinterest Point-Cloud Dissolve) */}
-              {handRevealingProject && (
-                <ParticleHandCanvas
-                  project={handRevealingProject}
-                  onComplete={() => setHandRevealingProject(null)}
-                  onSkip={() => setHandRevealingProject(null)}
-                />
-              )}
-
               {isSandboxLoading && sandboxProject.id !== 'groceryanalytics' && (
                 <div className="sandbox-modal__loader">
                   <div className="sandbox-modal__spinner"></div>
