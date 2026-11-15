@@ -46,10 +46,10 @@ export default function App() {
     }
   }
 
-  // Animated cycling designations for Hero section (Aligned for Data Science, AI & Analytics)
+  // Animated cycling designations for Hero section (Aligned for Data Science & AI)
   const designations = [
-    'Data Science Developer',
-    'AI & Machine Learning Enthusiast',
+    'Data Science & AI',
+    'Machine Learning & Analytics',
     'Data Analyst & BI Developer',
     'Research Author (Springer Nature)'
   ]
