@@ -23,6 +23,9 @@ export default function App() {
   const [showPrivAgentViz, setShowPrivAgentViz] = useState(false)
   const [activeSection, setActiveSection] = useState('hero')
   const [showBackToTop, setShowBackToTop] = useState(false)
+  const [activeProjectFilter, setActiveProjectFilter] = useState('all')
+  const [copiedBibtex, setCopiedBibtex] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
 
   // Animated cycling designations for Hero section
   const designations = [
@@ -107,12 +110,59 @@ export default function App() {
     }
   }
 
-  const copyEmailToClipboard = () => {
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText('charanhs359@gmail.com')
+  const showToast = (msg) => {
+    setToastMessage(msg)
+    setTimeout(() => setToastMessage(''), 3200)
+  }
+
+  const safeCopyToClipboard = async (text, onSuccess) => {
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text)
+      } else {
+        throw new Error('Clipboard API unavailable')
+      }
+    } catch {
+      try {
+        const textArea = document.createElement('textarea')
+        textArea.value = text
+        textArea.style.position = 'fixed'
+        textArea.style.opacity = '0'
+        document.body.appendChild(textArea)
+        textArea.focus()
+        textArea.select()
+        document.execCommand('copy')
+        document.body.removeChild(textArea)
+      } catch (e) {
+        console.warn('Clipboard fallback note:', e)
+      }
     }
-    setCopiedEmail(true)
-    setTimeout(() => setCopiedEmail(false), 2500)
+    if (onSuccess) onSuccess()
+  }
+
+  const copyEmailToClipboard = () => {
+    safeCopyToClipboard('charanhs359@gmail.com', () => {
+      setCopiedEmail(true)
+      showToast('Email address copied: charanhs359@gmail.com')
+      setTimeout(() => setCopiedEmail(false), 2500)
+    })
+  }
+
+  const copyBibtexCitation = () => {
+    const bibtex = `@inproceedings{charan2026privagentshield,
+  author    = {Charan, H. S. and collaborators},
+  title     = {PrivAgentShield: Policy-Aware Runtime Mediation for Multi-Agent Large Language Models},
+  booktitle = {Proceedings of the International Conference on Mathematical Modeling and Data Universe (ICMMDU 2026)},
+  series    = {Communications in Computer and Information Science},
+  publisher = {Springer Nature},
+  year      = {2026},
+  note      = {Paper ID: 190}
+}`
+    safeCopyToClipboard(bibtex, () => {
+      setCopiedBibtex(true)
+      showToast('Springer Nature BibTeX citation copied to clipboard')
+      setTimeout(() => setCopiedBibtex(false), 3000)
+    })
   }
 
   const handleFormSubmit = (e) => {
@@ -385,6 +435,7 @@ export default function App() {
       id: 'privagentshield',
       number: '01',
       category: 'Research Spotlight • Springer Nature',
+      filterCategory: 'ai',
       title: 'PrivAgentShield',
       tagline: 'Policy-Aware Runtime Mediation for Multi-Agent LLMs',
       role: 'First Author & Lead Architect',
@@ -408,6 +459,7 @@ export default function App() {
       id: 'urbanpulse',
       number: '02',
       category: 'Smart City & Voice AI Platform',
+      filterCategory: 'smartcity',
       title: 'UrbanPulse AI',
       tagline: 'Urban Intelligence & Accessible Multilingual Pedestrian Navigation',
       role: 'Team Lead • 13 Core Modules',
@@ -431,6 +483,7 @@ export default function App() {
       id: 'worldmonitor',
       number: '03',
       category: 'Cybersecurity Assessment Platform',
+      filterCategory: 'cybersecurity',
       title: 'WorldMonitor',
       tagline: 'Automated Vulnerability Scanner & Security Correlation Engine',
       role: 'Full-Stack Developer • SIH 2026 Nominated Solution',
@@ -454,6 +507,7 @@ export default function App() {
       id: 'dvrnvr',
       number: '04',
       category: 'Digital Forensics & Video Carving',
+      filterCategory: 'cybersecurity',
       title: 'DVR/NVR Forensic Analyzer',
       tagline: 'Physical Disk Imaging & Proprietary CCTV Video Stream Carving',
       role: 'Lead Developer • Problem Statement SIH26150',
@@ -477,6 +531,7 @@ export default function App() {
       id: 'groceryanalytics',
       number: '05',
       category: 'Business Intelligence & Operations',
+      filterCategory: 'analytics',
       title: 'Blinkit Grocery Analytics',
       tagline: 'Interactive Retail Performance & Quick Commerce Logistics Intelligence',
       role: 'Data Analyst & BI Developer',
@@ -497,6 +552,18 @@ export default function App() {
       metrics: { primary: '$1.20M', label: 'Total Sales', badge: '1,559 Items • 3.92★' }
     }
   ]
+
+  const projectFilterTabs = [
+    { id: 'all', label: 'All Projects', count: 5 },
+    { id: 'ai', label: 'AI & LLM Security', count: 1 },
+    { id: 'smartcity', label: 'Smart City & Web', count: 1 },
+    { id: 'cybersecurity', label: 'Cybersecurity & Forensics', count: 2 },
+    { id: 'analytics', label: 'BI & Analytics', count: 1 }
+  ]
+
+  const filteredProjects = activeProjectFilter === 'all'
+    ? projectsData
+    : projectsData.filter((p) => p.filterCategory === activeProjectFilter)
 
   // Task 4: Education, Leadership & Certifications
   const educationData = [
@@ -1544,6 +1611,21 @@ export default function App() {
                     <polyline points="7 7 17 7 17 17"></polyline>
                   </svg>
                 </a>
+                <button
+                  type="button"
+                  onClick={copyBibtexCitation}
+                  className="research__btn research__btn--ghost"
+                  title="Copy official BibTeX Citation for Springer Nature proceedings"
+                  data-magnetic
+                  onMouseMove={handleMagneticMove}
+                  onMouseLeave={handleMagneticLeave}
+                >
+                  <span>{copiedBibtex ? '✓ BibTeX Copied' : 'Cite Paper (BibTeX)'}</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                </button>
                 <a
                   href="#work"
                   className="research__btn research__btn--link"
@@ -1678,8 +1760,25 @@ export default function App() {
             </p>
           </div>
 
+          {/* Domain Category Filter Tabs */}
+          <div className="work__filters" role="tablist" aria-label="Project domain categories">
+            {projectFilterTabs.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                role="tab"
+                aria-selected={activeProjectFilter === tab.id}
+                className={`work__filter-pill ${activeProjectFilter === tab.id ? 'is-active' : ''}`}
+                onClick={() => setActiveProjectFilter(tab.id)}
+              >
+                <span>{tab.label}</span>
+                <span className="work__filter-count">{tab.count}</span>
+              </button>
+            ))}
+          </div>
+
           <div className="work__grid">
-            {projectsData.map((project) => (
+            {filteredProjects.map((project) => (
               <article key={project.id} id={project.id} className={`work__card ${project.featured ? 'work__card--featured' : ''}`}>
                 <div className="work__card-header">
                   <span className="work__card-number">{project.number}</span>
@@ -2474,6 +2573,13 @@ export default function App() {
               </div>
             </div>
           </div>
+        </div>
+      )}
+      {/* Toast Notification for Clipboard Actions */}
+      {toastMessage && (
+        <div className="portfolio-toast" role="status" aria-live="polite">
+          <span className="portfolio-toast__icon">✓</span>
+          <span className="portfolio-toast__text">{toastMessage}</span>
         </div>
       )}
     </>
