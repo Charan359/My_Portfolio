@@ -25,6 +25,12 @@ export default function App() {
   const [copiedBibtex, setCopiedBibtex] = useState(false)
   const [toastMessage, setToastMessage] = useState('')
   const [workViewMode, setWorkViewMode] = useState('single')
+  const [activeCertIdx, setActiveCertIdx] = useState(0)
+  const [certViewMode, setCertViewMode] = useState('deck')
+  const [selectedCertModal, setSelectedCertModal] = useState(null)
+
+  const handleOpenCertModal = (certItem) => setSelectedCertModal(certItem)
+  const handleCloseCertModal = () => setSelectedCertModal(null)
 
   const handleWorkPrev = () => {
     setActiveProjectIdx((prev) => (prev > 0 ? prev - 1 : projectsData.length - 1))
@@ -85,8 +91,12 @@ export default function App() {
     { type: 'Section', title: 'Research & Publications', desc: 'Springer Nature Proceedings (ICMMDU 2026), Paper ID: 190, LRI* formulation', target: 'research' },
     { type: 'Section', title: 'Technical Skills', desc: 'Categorized matrix across 32 technologies', target: 'skills' },
     { type: 'Section', title: 'Featured Work', desc: '5 production projects & Springer Nature paper', target: 'work' },
-    { type: 'Section', title: 'Education & Timeline', desc: 'Academic education, B.E. Data Science, Vibexathon & 6 certificates', target: 'timeline' },
+    { type: 'Section', title: 'Education & Timeline', desc: 'Academic education, B.E. Data Science, Vibexathon & 7 verified certificates', target: 'timeline' },
     { type: 'Section', title: 'Get in Touch', desc: 'Direct email, contact form & verified socials', target: 'contact' },
+    { type: 'Certificate', title: 'Python Essentials 1 (Cisco / OpenEDG)', desc: 'Credly-verified credential in Python algorithms, data structures & functions', target: 'timeline' },
+    { type: 'Certificate', title: 'C Essentials 1 (Cisco / OpenEDG)', desc: 'Credly-verified credential in C memory layout, pointers & low-level optimization', target: 'timeline' },
+    { type: 'Certificate', title: 'Coordinator — Vibexathon 1.0', desc: 'Verified 24-hr state hackathon coordinator certificate & accreditation', target: 'timeline' },
+    { type: 'Certificate', title: 'Finalist — Smart India Hackathon (SIH 2026)', desc: 'Dual-track national nominee certificate in cybersecurity & forensic video carving', target: 'timeline' },
     { type: 'Project', title: 'PrivAgentShield', desc: 'Policy-aware runtime mediation for multi-agent LLMs (Springer Nature)', target: 'privagentshield' },
     { type: 'Project', title: 'UrbanPulse AI', desc: 'Smart city platform with 15-language Voice AI & Leaflet overlays', target: 'urbanpulse' },
     { type: 'Project', title: 'WorldMonitor', desc: 'Automated cybersecurity vulnerability scanner (SIH 2026 Nominated)', target: 'worldmonitor' },
@@ -221,16 +231,16 @@ export default function App() {
     }
   }, [])
 
-  // Lock scroll when mobile menu, search dialog, or sandbox modal is open
+  // Lock scroll when mobile menu, search dialog, sandbox modal, or certificate modal is open
   useEffect(() => {
-    if (isMenuOpen || isSearchOpen || sandboxProject) {
+    if (isMenuOpen || isSearchOpen || sandboxProject || selectedCertModal) {
       document.body.style.overflow = 'hidden'
     } else {
       document.body.style.overflow = ''
     }
-  }, [isMenuOpen, isSearchOpen, sandboxProject])
+  }, [isMenuOpen, isSearchOpen, sandboxProject, selectedCertModal])
 
-  // Global Ctrl+K / Cmd+K and Esc listener for Search Palette and Sandbox Modal
+  // Global Ctrl+K / Cmd+K and Esc listener for Search Palette, Sandbox Modal, and Cert Modal
   useEffect(() => {
     const handleGlobalKey = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -241,6 +251,7 @@ export default function App() {
         setIsSearchOpen(false)
         setIsMenuOpen(false)
         setSandboxProject(null)
+        setSelectedCertModal(null)
       }
     }
     window.addEventListener('keydown', handleGlobalKey)
@@ -596,64 +607,158 @@ export default function App() {
 
   const leadershipData = [
     {
+      id: 'vibexathon-coordinator',
       title: 'Coordinator — Vibexathon 1.0 (State-Level Hackathon)',
-      org: 'Dept. of CSE (Data Science) & IEEE NCET',
+      org: 'Dept. of CSE (Data Science), NCET in association with IEEE & IIC',
       date: '16–17 March 2026',
       badge: 'Official Recognition',
-      desc: 'Recognized with official Certificate of Appreciation for leadership and end-to-end event management of a 24-hour State-Level Hackathon with 200+ participants.'
+      desc: 'Recognized with official Certificate of Appreciation for leadership and end-to-end event management of a 24-hour State-Level Hackathon with 200+ participants.',
+      fileUrl: '/certificates/vibexathon-coordinator.png',
+      fileType: 'image',
+      verifyUrl: 'https://vibexathon.in/verify/VBX-B29BF820',
+      verifyLabel: 'Verify on Vibexathon',
+      credId: 'VBX-B29BF820',
+      skills: ['Hackathon Leadership', 'Problem Statement Formulation', 'Technical Logistics', 'Panel Coordination', 'Data Science Event Mgmt'],
+      gainSummary: 'Orchestrated end-to-end operations for a 24-hour state-level hackathon organized by the Department of CSE (Data Science). Led student committees, structured problem statements across AI/ML domains, coordinated IEEE/IIC compliance, and facilitated evaluation panels for 200+ collegiate participants.'
     },
     {
+      id: 'sih-2026-finalist',
       title: 'Nominated Finalist — Smart India Hackathon (SIH 2026)',
-      org: 'Ministry of Education & NCET Innovation Cell',
+      org: 'Ministry of Education Innovation Cell (MIC), AICTE & NCET',
       date: 'National Selection',
       badge: 'Dual-Track Nominee',
-      desc: 'Qualified internal selection rounds and nominated across two distinct problem statements: Automated Web Security Scanner and Forensic Video Carving.'
+      desc: 'Qualified internal selection rounds and nominated across two distinct national problem statements: Automated Web Security Scanner and Forensic Video Carving.',
+      fileUrl: '/certificates/sih-2026-certificate.pdf',
+      fileType: 'pdf',
+      verifyUrl: null,
+      verifyLabel: 'Verified Institutional Record',
+      credId: 'SIH2026-FINALIST-NCET',
+      skills: ['Digital Forensics', 'Web Security Auditing', 'National Hackathon Strategy', 'Applied AI Systems', 'Rapid Prototyping'],
+      gainSummary: 'Selected and nominated as Finalist in India’s premier national hackathon solving high-impact public sector technical challenges under the Ministry of Education and AICTE, architecting automated vulnerability detection and forensic video carving engines under strict operational constraints.'
     },
     {
+      id: 'springer-nature-research',
       title: 'First-Author International Research Acceptance',
       org: 'ICMMDU 2026 • Springer Nature Proceedings',
       date: 'Paper ID: 190',
       badge: 'Springer Nature Accepted',
-      desc: 'Original research paper on runtime privacy mediation for multi-agent LLM systems accepted for publication in Springer Nature conference proceedings.'
+      desc: 'Original research paper on runtime privacy mediation for multi-agent LLM systems accepted for publication in Springer Nature conference proceedings.',
+      fileUrl: null,
+      verifyUrl: null,
+      verifyLabel: 'Peer-Reviewed Conference Acceptance',
+      credId: 'ICMMDU-2026-PID190',
+      skills: ['Privacy-Preserving AI', 'Multi-Agent LLM Orchestration', 'Policy Enforcement Engine', 'Empirical Benchmarking', 'Research Publication'],
+      gainSummary: 'Authored and defended original peer-reviewed computer science research introducing PrivAgentShield, a formal runtime mediation architecture for multi-agent LLM systems achieving 43% lower data exposure with sub-15ms overhead.'
     }
   ]
 
   const certificationsData = [
     {
+      id: 'cisco-python-essentials-1',
+      title: 'Python Essentials 1',
+      issuer: 'Cisco Networking Academy & OpenEDG Python Institute',
+      category: 'Data Science & Core Programming',
+      code: 'PCEP-Ready Credential',
+      issueDate: 'August 15, 2025',
+      badge: 'Credly Verified',
+      verifyUrl: 'https://www.credly.com/badges/e17059fd-5cf0-4c32-9401-43162e969e98/public_url',
+      verifyLabel: 'Verify on Credly',
+      fileUrl: '/certificates/cisco-python-essentials-1.pdf',
+      fileType: 'pdf',
+      desc: 'Mastery of foundational Python programming, algorithmic thinking, string parsing, multidimensional collections, dictionary manipulation, and modular functions.',
+      skills: ['Python 3', 'Algorithmic Problem Solving', 'Data Structures (Lists, Dicts, Tuples)', 'Modular Architecture', 'Exception Handling'],
+      gainSummary: 'Acquired rigorous knowledge of standard Python runtime semantics, procedural logic, control flow, collections, and custom function design directly applicable to Data Science pipelines, data cleaning scripts, and machine learning models.'
+    },
+    {
+      id: 'cisco-c-essentials-1',
+      title: 'C Essentials 1 — Basics of Programming',
+      issuer: 'Cisco Networking Academy & OpenEDG C/C++ Institute',
+      category: 'Systems & Core Programming',
+      code: 'CLA-Ready Credential',
+      issueDate: 'September 04, 2025',
+      badge: 'Credly Verified',
+      verifyUrl: 'https://www.credly.com/badges/3a1a3532-4479-4afa-a603-88443b7614a5/public_url',
+      verifyLabel: 'Verify on Credly',
+      fileUrl: '/certificates/cisco-c-essentials-1.pdf',
+      fileType: 'pdf',
+      desc: 'Core procedural programming concepts, memory pointers, bitwise arithmetic, array allocation, and compilation mechanics.',
+      skills: ['C Language', 'Pointers & Memory Layout', 'Modular Architecture', 'Bitwise Logic', 'Low-Level Optimization'],
+      gainSummary: 'Mastered machine-level memory layout, manual pointer manipulation, data structures, and computational efficiency essentials—providing a foundational edge when profiling and optimizing numeric/ML computing kernels.'
+    },
+    {
+      id: 'oracle-ai-foundations-2025',
       title: 'Oracle Cloud Infrastructure 2025 Certified AI Foundations',
       issuer: 'Oracle Cloud',
+      category: 'AI & Cloud Infrastructure',
       code: 'OCI-AI-2025',
-      desc: 'Validated core competence in AI architectures, ML workloads, generative models, and OCI infrastructure services.'
+      issueDate: '2025',
+      badge: 'Institutional Credential',
+      verifyUrl: null,
+      verifyLabel: 'Verified Institutional Credential',
+      fileUrl: null,
+      desc: 'Validated core competence in AI architectures, ML workloads, generative models, LLMs, and OCI infrastructure services.',
+      skills: ['Generative AI', 'OCI AI Services', 'Deep Learning Concepts', 'Model Training Pipelines', 'Cloud AI Infrastructure'],
+      gainSummary: 'Gained practical insight into cloud-scale machine learning workflows, foundation model deployment, retrieval architectures, and scalable cloud infrastructure for artificial intelligence.'
     },
     {
+      id: 'novitech-data-analytics-30d',
       title: '30 Days MasterClass in Data Analytics',
       issuer: 'NoviTech R&D',
-      code: 'Industry Training',
-      desc: 'Hands-on training in exploratory data analysis (EDA), business intelligence metrics, and visual analytics.'
+      category: 'Data Analytics & Business Intelligence',
+      code: 'Industry MasterClass',
+      issueDate: '2025',
+      badge: 'Industry Certified',
+      verifyUrl: null,
+      verifyLabel: 'Verified Industry Credential',
+      fileUrl: null,
+      desc: 'Hands-on training in exploratory data analysis (EDA), business intelligence metrics, feature preparation, and visual analytics.',
+      skills: ['Exploratory Data Analysis (EDA)', 'Statistical Analysis', 'Pandas & NumPy', 'Data Visualization', 'Business Intelligence'],
+      gainSummary: 'Applied statistical modeling and analytical pipelines across realistic business datasets, uncovering data drift, missingness patterns, and building actionable executive dashboards.'
     },
     {
+      id: 'oracle-database-23ai',
       title: 'Applied Database Systems 23ai',
       issuer: 'Oracle Academy',
+      category: 'Databases & AI Integration',
       code: 'Database 23ai',
-      desc: 'Proficiency in modern AI-integrated relational and JSON database schemas, query optimization, and advanced SQL.'
+      issueDate: '2025',
+      badge: 'Academic Verified',
+      verifyUrl: null,
+      verifyLabel: 'Verified Academic Credential',
+      fileUrl: null,
+      desc: 'Proficiency in AI-integrated relational and JSON vector schemas, complex query optimization, index tuning, and advanced SQL operations.',
+      skills: ['Oracle SQL', 'Database 23ai Vector/JSON Features', 'Query Optimization', 'Schema Design', 'Relational Algebra'],
+      gainSummary: 'Mastered modern relational database architectures with AI vector capabilities, query plan analysis, indexing strategies, and high-performance SQL transformations for analytics.'
     },
     {
-      title: 'Python Essentials 1',
-      issuer: 'Cisco Networking Academy',
-      code: 'Cisco Certified',
-      desc: 'Mastery of core procedural Python, algorithmic problem solving, string manipulation, and data structures.'
-    },
-    {
+      id: 'infosys-software-engineering-alm',
       title: 'Software Engineering & ALM / Agile & DevOps',
       issuer: 'Infosys Springboard',
+      category: 'Software Engineering',
       code: 'Infosys Enterprise',
-      desc: 'Enterprise training in software development lifecycle (SDLC), Agile Scrum methodologies, and CI/CD workflows.'
+      issueDate: '2025',
+      badge: 'Enterprise Verified',
+      verifyUrl: null,
+      verifyLabel: 'Verified Enterprise Credential',
+      fileUrl: null,
+      desc: 'Enterprise training in software development lifecycle (SDLC), Agile Scrum methodologies, version control governance, and CI/CD workflows.',
+      skills: ['Agile Scrum', 'Application Lifecycle Management', 'SDLC', 'Git Workflows', 'CI/CD Principles'],
+      gainSummary: 'Internalized enterprise software engineering standards, sprint cadence, pull request reviews, automated testing, and reliable software delivery practices.'
     },
     {
+      id: 'oracle-java-fundamentals',
       title: 'Java Fundamentals',
       issuer: 'Oracle Academy',
+      category: 'Object-Oriented Programming',
       code: 'Java Foundations',
-      desc: 'Comprehensive grounding in object-oriented programming, inheritance, polymorphism, and Java standard libraries.'
+      issueDate: '2024',
+      badge: 'Academic Verified',
+      verifyUrl: null,
+      verifyLabel: 'Verified Academic Credential',
+      fileUrl: null,
+      desc: 'Comprehensive grounding in object-oriented programming, class design, encapsulation, inheritance, polymorphism, and Java Collections.',
+      skills: ['Java SE', 'Object-Oriented Design', 'Collections Framework', 'Inheritance & Polymorphism', 'Unit Testing'],
+      gainSummary: 'Built a strong foundation in typed object-oriented software engineering principles, design patterns, and robust software architecture.'
     }
   ]
 
@@ -2160,7 +2265,7 @@ export default function App() {
 
               <div className="timeline__items">
                 {leadershipData.map((lead, idx) => (
-                  <div key={idx} className="timeline__item">
+                  <div key={lead.id || idx} className="timeline__item">
                     <div className="timeline__item-dot timeline__item-dot--accent"></div>
                     <div className="timeline__item-card">
                       <div className="timeline__lead-header">
@@ -2170,31 +2275,260 @@ export default function App() {
                       <h4 className="timeline__item-degree">{lead.title}</h4>
                       <p className="timeline__item-inst">{lead.org}</p>
                       <p className="timeline__item-desc">{lead.desc}</p>
+
+                      {/* Leadership Certificate & Verification Actions */}
+                      {(lead.fileUrl || lead.verifyUrl) && (
+                        <div className="timeline__lead-actions">
+                          {lead.fileUrl && (
+                            <button
+                              type="button"
+                              className="cert-action-btn cert-action-btn--primary cert-action-btn--sm"
+                              onClick={() => handleOpenCertModal(lead)}
+                              aria-label={`View Certificate for ${lead.title}`}
+                            >
+                              <span>View Certificate</span>
+                              <span className="cert-action-btn__icon">👁️</span>
+                            </button>
+                          )}
+                          {lead.verifyUrl && (
+                            <a
+                              href={lead.verifyUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="cert-action-btn cert-action-btn--verify cert-action-btn--sm"
+                              aria-label={`Verify credential for ${lead.title}`}
+                            >
+                              <span>{lead.verifyLabel || 'Verify'}</span>
+                              <span className="cert-action-btn__icon">↗</span>
+                            </a>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Right Column: Industry Certifications */}
-            <div className="timeline__column">
-              <h3 className="timeline__column-title">
-                <span className="timeline__column-icon">📜</span>
-                <span>Verified Certifications</span>
-              </h3>
+            {/* Right Column: Verified Certifications Showcase */}
+            <div className="timeline__column timeline__column--certs">
+              <div className="timeline__certs-header-row">
+                <h3 className="timeline__column-title">
+                  <span className="timeline__column-icon">📜</span>
+                  <span>Verified Certifications</span>
+                  <span className="timeline__cert-count-pill">{certificationsData.length} Credentials</span>
+                </h3>
 
-              <div className="timeline__certs-grid">
-                {certificationsData.map((cert, idx) => (
-                  <div key={idx} className="timeline__cert-card" data-magnetic onMouseMove={handleMagneticMove} onMouseLeave={handleMagneticLeave}>
-                    <div className="timeline__cert-top">
-                      <span className="timeline__cert-issuer">{cert.issuer}</span>
-                      <span className="timeline__cert-code">{cert.code}</span>
-                    </div>
-                    <h4 className="timeline__cert-title">{cert.title}</h4>
-                    <p className="timeline__cert-desc">{cert.desc}</p>
-                  </div>
-                ))}
+                {/* View Mode Toggle Switcher */}
+                <div className="certs-view-toggle" role="tablist" aria-label="Certificates Display Mode">
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={certViewMode === 'deck'}
+                    className={`certs-toggle-btn ${certViewMode === 'deck' ? 'is-active' : ''}`}
+                    onClick={() => setCertViewMode('deck')}
+                    title="Deck-of-Cards interactive view"
+                  >
+                    <span className="certs-toggle-btn__icon">🎴</span>
+                    <span>Deck View</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    aria-selected={certViewMode === 'grid'}
+                    className={`certs-toggle-btn ${certViewMode === 'grid' ? 'is-active' : ''}`}
+                    onClick={() => setCertViewMode('grid')}
+                    title="Standard grid view"
+                  >
+                    <span className="certs-toggle-btn__icon">▦</span>
+                    <span>Grid View</span>
+                  </button>
+                </div>
               </div>
+
+              <p className="timeline__certs-subnote">
+                {certViewMode === 'deck'
+                  ? 'Interactive 3D Deck: Click any card in the stack to pick it up, or use the controls to flip through.'
+                  : 'Complete catalogue of accredited certifications, verified credentials, and technical proficiencies.'}
+              </p>
+
+              {certViewMode === 'deck' ? (
+                /* Interactive Deck-of-Cards View */
+                <div className="cert-deck-container">
+                  <div
+                    className="cert-deck-stage"
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                      if (e.key === 'ArrowLeft') setActiveCertIdx((prev) => (prev > 0 ? prev - 1 : certificationsData.length - 1))
+                      if (e.key === 'ArrowRight') setActiveCertIdx((prev) => (prev < certificationsData.length - 1 ? prev + 1 : 0))
+                    }}
+                    aria-label="Interactive certificate cards deck"
+                  >
+                    {certificationsData.map((cert, idx) => {
+                      const offset = idx - activeCertIdx
+                      const isActive = idx === activeCertIdx
+                      return (
+                        <div
+                          key={cert.id || idx}
+                          className={`cert-deck-card ${isActive ? 'is-active' : ''} ${offset < 0 ? 'is-left' : ''} ${offset > 0 ? 'is-right' : ''}`}
+                          style={{
+                            '--card-offset': offset,
+                            '--abs-offset': Math.abs(offset),
+                            zIndex: isActive ? 30 : 25 - Math.min(Math.abs(offset), 20)
+                          }}
+                          onClick={() => setActiveCertIdx(idx)}
+                          role="button"
+                          tabIndex={0}
+                          aria-label={`Select certificate ${cert.title}`}
+                        >
+                          <div className="cert-deck-card__inner">
+                            <div className="cert-deck-card__header">
+                              <div className="cert-deck-card__badge-row">
+                                <span className="cert-deck-card__issuer-pill">{cert.issuer}</span>
+                                <span className={`cert-deck-card__verif-pill ${cert.verifyUrl ? 'is-verified-online' : 'is-verified-inst'}`}>
+                                  {cert.verifyUrl ? '✓ Verified Online' : '✓ Verified'}
+                                </span>
+                              </div>
+                              <span className="cert-deck-card__index-num">#{String(idx + 1).padStart(2, '0')}</span>
+                            </div>
+
+                            <div className="cert-deck-card__category">{cert.category}</div>
+                            <h4 className="cert-deck-card__title">{cert.title}</h4>
+
+                            <div className="cert-deck-card__meta">
+                              <span className="cert-deck-card__code"><strong>Code:</strong> {cert.code}</span>
+                              <span className="cert-deck-card__date"><strong>Date:</strong> {cert.issueDate}</span>
+                            </div>
+
+                            <p className="cert-deck-card__desc">{cert.desc}</p>
+
+                            <div className="cert-deck-card__skills">
+                              {cert.skills.slice(0, 3).map((sk, sIdx) => (
+                                <span key={sIdx} className="cert-deck-card__skill-pill">{sk}</span>
+                              ))}
+                              {cert.skills.length > 3 && (
+                                <span className="cert-deck-card__skill-pill is-more">+{cert.skills.length - 3}</span>
+                              )}
+                            </div>
+
+                            <div className="cert-deck-card__actions" onClick={(e) => e.stopPropagation()}>
+                              <button
+                                type="button"
+                                className="cert-action-btn cert-action-btn--primary"
+                                onClick={() => handleOpenCertModal(cert)}
+                              >
+                                <span>View Certificate</span>
+                                <span className="cert-action-btn__icon">👁️</span>
+                              </button>
+                              {cert.verifyUrl && (
+                                <a
+                                  href={cert.verifyUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="cert-action-btn cert-action-btn--verify"
+                                >
+                                  <span>{cert.verifyLabel || 'Verify'}</span>
+                                  <span className="cert-action-btn__icon">↗</span>
+                                </a>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      )
+                    })}
+                  </div>
+
+                  {/* Deck Navigation & Status Bar */}
+                  <div className="cert-deck-controls">
+                    <button
+                      type="button"
+                      className="cert-deck-nav-btn cert-deck-nav-btn--prev"
+                      onClick={() => setActiveCertIdx((prev) => (prev > 0 ? prev - 1 : certificationsData.length - 1))}
+                      aria-label="Previous Certificate Card"
+                    >
+                      ← Prev Card
+                    </button>
+
+                    <div className="cert-deck-indicator">
+                      <span className="cert-deck-indicator__curr">
+                        Card {String(activeCertIdx + 1).padStart(2, '0')} of {String(certificationsData.length).padStart(2, '0')}
+                      </span>
+                      <div className="cert-deck-dots">
+                        {certificationsData.map((_, dotIdx) => (
+                          <button
+                            key={dotIdx}
+                            type="button"
+                            className={`cert-deck-dot ${dotIdx === activeCertIdx ? 'is-active' : ''}`}
+                            onClick={() => setActiveCertIdx(dotIdx)}
+                            aria-label={`Jump to certificate card ${dotIdx + 1}`}
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="cert-deck-nav-btn cert-deck-nav-btn--next"
+                      onClick={() => setActiveCertIdx((prev) => (prev < certificationsData.length - 1 ? prev + 1 : 0))}
+                      aria-label="Next Certificate Card"
+                    >
+                      Next Card →
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                /* Grid View */
+                <div className="timeline__certs-grid">
+                  {certificationsData.map((cert, idx) => (
+                    <div
+                      key={cert.id || idx}
+                      className="timeline__cert-card"
+                      data-magnetic
+                      onMouseMove={handleMagneticMove}
+                      onMouseLeave={handleMagneticLeave}
+                    >
+                      <div className="timeline__cert-top">
+                        <span className="timeline__cert-issuer">{cert.issuer}</span>
+                        <div className="timeline__cert-badge-cluster">
+                          <span className={`timeline__cert-status-tag ${cert.verifyUrl ? 'is-live' : 'is-institutional'}`}>
+                            {cert.verifyUrl ? '✓ Verified Online' : '✓ Verified'}
+                          </span>
+                          <span className="timeline__cert-code">{cert.code}</span>
+                        </div>
+                      </div>
+                      <div className="timeline__cert-category">{cert.category}</div>
+                      <h4 className="timeline__cert-title">{cert.title}</h4>
+                      <p className="timeline__cert-desc">{cert.desc}</p>
+                      <div className="timeline__cert-skills">
+                        {cert.skills.map((sk, sIdx) => (
+                          <span key={sIdx} className="timeline__cert-skill-pill">{sk}</span>
+                        ))}
+                      </div>
+                      <div className="timeline__cert-actions">
+                        <button
+                          type="button"
+                          className="cert-action-btn cert-action-btn--primary"
+                          onClick={() => handleOpenCertModal(cert)}
+                        >
+                          <span>View Certificate</span>
+                          <span className="cert-action-btn__icon">👁️</span>
+                        </button>
+                        {cert.verifyUrl && (
+                          <a
+                            href={cert.verifyUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="cert-action-btn cert-action-btn--verify"
+                          >
+                            <span>{cert.verifyLabel || 'Verify Credential'}</span>
+                            <span className="cert-action-btn__icon">↗</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -2648,6 +2982,153 @@ export default function App() {
               </div>
               <div className="sandbox-modal__footer-right">
                 <span className="sandbox-modal__esc-tip">Press <kbd>Esc</kbd> to return to portfolio</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================
+          12. CERTIFICATE LIGHTBOX MODAL
+          ======================================== */}
+      {selectedCertModal && (
+        <div
+          className="cert-modal-overlay"
+          onClick={handleCloseCertModal}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="cert-modal-title"
+        >
+          <div className="cert-modal-box" onClick={(e) => e.stopPropagation()}>
+            <div className="cert-modal-header">
+              <div className="cert-modal-header__info">
+                <div className="cert-modal-badge-row">
+                  <span className="cert-modal-issuer">{selectedCertModal.issuer || selectedCertModal.org}</span>
+                  <span className={`cert-modal-status ${selectedCertModal.verifyUrl ? 'is-verified-online' : 'is-verified-inst'}`}>
+                    {selectedCertModal.verifyUrl ? '✓ Verified Credential' : '✓ Institutional Record'}
+                  </span>
+                  {selectedCertModal.code && <span className="cert-modal-code">{selectedCertModal.code}</span>}
+                </div>
+                <h3 className="cert-modal-title" id="cert-modal-title">{selectedCertModal.title}</h3>
+                <div className="cert-modal-meta">
+                  <span><strong>Date / Timeline:</strong> {selectedCertModal.issueDate || selectedCertModal.date}</span>
+                  {selectedCertModal.credId && <span><strong>Credential ID:</strong> {selectedCertModal.credId}</span>}
+                </div>
+              </div>
+              <button
+                type="button"
+                className="cert-modal-close-btn"
+                onClick={handleCloseCertModal}
+                aria-label="Close Certificate Preview"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="cert-modal-body">
+              {/* Document Display / Preview Stage */}
+              <div className="cert-modal-preview-stage">
+                {selectedCertModal.fileUrl ? (
+                  selectedCertModal.fileType === 'image' || selectedCertModal.fileUrl.endsWith('.png') || selectedCertModal.fileUrl.endsWith('.jpg') ? (
+                    <div className="cert-modal-img-wrap">
+                      <img
+                        src={selectedCertModal.fileUrl}
+                        alt={`Official Certificate - ${selectedCertModal.title}`}
+                        className="cert-modal-img"
+                      />
+                    </div>
+                  ) : (
+                    <div className="cert-modal-pdf-wrap">
+                      <iframe
+                        src={`${selectedCertModal.fileUrl}#toolbar=0&navpanes=0`}
+                        title={`Certificate PDF - ${selectedCertModal.title}`}
+                        className="cert-modal-pdf-frame"
+                      />
+                      <div className="cert-modal-pdf-bar">
+                        <a
+                          href={selectedCertModal.fileUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="cert-modal-pdf-btn"
+                        >
+                          <span>Open Full PDF in New Tab</span>
+                          <span>↗</span>
+                        </a>
+                      </div>
+                    </div>
+                  )
+                ) : (
+                  <div className="cert-modal-placeholder-wrap">
+                    <div className="cert-modal-seal-crest">
+                      <span className="cert-seal-icon">🏛️</span>
+                      <span className="cert-seal-text">INSTITUTIONAL ACCREDITATION</span>
+                    </div>
+                    <h4 className="cert-seal-title">{selectedCertModal.title}</h4>
+                    <p className="cert-seal-org">{selectedCertModal.issuer || selectedCertModal.org}</p>
+                    <div className="cert-seal-id-box">
+                      <span>Verified Reference ID:</span>
+                      <code>{selectedCertModal.credId || selectedCertModal.code || 'INST-VERIFIED-CREDENTIAL'}</code>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Learning Outcomes & Competencies Gained */}
+              <div className="cert-modal-details">
+                <div className="cert-modal-section">
+                  <h4 className="cert-modal-section-title">
+                    <span className="cert-modal-icon">🎯</span>
+                    <span>Key Competencies &amp; Technical Capabilities Mastered</span>
+                  </h4>
+                  <p className="cert-modal-gain-text">
+                    {selectedCertModal.gainSummary || selectedCertModal.desc}
+                  </p>
+                </div>
+
+                {selectedCertModal.skills && selectedCertModal.skills.length > 0 && (
+                  <div className="cert-modal-section">
+                    <h4 className="cert-modal-section-title">
+                      <span className="cert-modal-icon">⚡</span>
+                      <span>Verified Technologies &amp; Methodologies</span>
+                    </h4>
+                    <div className="cert-modal-skills-cloud">
+                      {selectedCertModal.skills.map((skill, sIdx) => (
+                        <span key={sIdx} className="cert-modal-skill-chip">{skill}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Footer Action Row */}
+                <div className="cert-modal-footer-actions">
+                  {selectedCertModal.verifyUrl ? (
+                    <a
+                      href={selectedCertModal.verifyUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cert-action-btn cert-action-btn--verify cert-action-btn--lg"
+                    >
+                      <span>{selectedCertModal.verifyLabel || 'Verify Official Credential'}</span>
+                      <span className="cert-action-btn__icon">↗</span>
+                    </a>
+                  ) : (
+                    <div className="cert-institutional-status-pill">
+                      <span className="cert-status-dot"></span>
+                      <span>Verified Institutional Credential &bull; {selectedCertModal.code || selectedCertModal.credId || 'Accredited'}</span>
+                    </div>
+                  )}
+                  {selectedCertModal.fileUrl && (
+                    <a
+                      href={selectedCertModal.fileUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="cert-action-btn cert-action-btn--secondary cert-action-btn--lg"
+                    >
+                      <span>Download / View Source Document</span>
+                      <span className="cert-action-btn__icon">↗</span>
+                    </a>
+                  )}
+                </div>
               </div>
             </div>
           </div>
